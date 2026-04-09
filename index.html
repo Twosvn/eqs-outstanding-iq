@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OutstandIQ — B2B Debt Recovery for Recruitment, Construction & Legal</title>
+  <meta name="description" content="Contingency-only debt recovery for recruitment agencies, construction firms, and legal practices. Free audit in 48 hours. You pay nothing until we collect.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #dc2626;
+      --red-dark: #b91c1c;
+      --red-light: #fef2f2;
+      --red-mid: #fee2e2;
+      --black: #0f172a;
+      --ink: #1e293b;
+      --grey: #64748b;
+      --muted: #94a3b8;
+      --light: #f8fafc;
+      --border: #e2e8f0;
+      --white: #ffffff;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      color: var(--ink);
+      background: var(--white);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 62px;
+    }
+    .nav-left { display: flex; align-items: center; gap: 36px; }
+    .nav-brand {
+      font-size: 19px;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--grey);
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-phone {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    .nav-phone span { color: var(--grey); font-weight: 400; font-size: 12px; margin-right: 4px; }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white) !important;
+      padding: 9px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--red-dark); }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 80px 32px 64px;
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red-light);
+      border: 1px solid var(--red-mid);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+    .hero-eyebrow::before {
+      content: "";
+      width: 6px; height: 6px; min-width: 6px;
+      background: var(--red);
+      border-radius: 50%;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.1;
+      letter-spacing: -2px;
+      max-width: 740px;
+      margin-bottom: 22px;
+    }
+    .hero h1 em { font-style: normal; color: var(--red); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--grey);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      transition: background 0.15s, transform 0.1s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .hero-note {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .hero-note strong { color: var(--grey); font-weight: 600; }
+
+    /* ─── TRUST BAR ─── */
+    .trust-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      background: var(--light);
+    }
+    .trust-bar-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--grey);
+    }
+    .trust-item::before {
+      content: "";
+      width: 16px; height: 16px; min-width: 16px;
+      background: var(--red);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z'/%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ─── OUTCOMES ─── */
+    .outcomes { background: var(--black); padding: 56px 32px; }
+    .outcomes-inner { max-width: 1040px; margin: 0 auto; }
+    .outcomes-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .outcome-item {
+      padding-right: 40px;
+      margin-right: 40px;
+      border-right: 1px solid #1e293b;
+    }
+    .outcome-item:last-child { padding-right: 0; margin-right: 0; border-right: none; }
+    .outcome-sector {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+    .outcome-stat {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .outcome-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── SHARED SECTION STYLES ─── */
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--red);
+      margin-bottom: 14px;
+    }
+    .section-h2 {
+      font-size: clamp(26px, 3.5vw, 36px);
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .section-body { font-size: 16px; color: var(--grey); line-height: 1.8; }
+
+    /* ─── HOW IT WORKS ─── */
+    .how { padding: 88px 32px; }
+    .how-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .how-steps { display: flex; flex-direction: column; gap: 24px; padding-top: 52px; }
+    .step-item { display: flex; gap: 18px; align-items: flex-start; }
+    .step-n {
+      width: 30px; height: 30px; min-width: 30px;
+      background: var(--red);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+    .step-text h4 { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 5px; }
+    .step-text p { font-size: 14px; color: var(--grey); line-height: 1.7; }
+
+    /* ─── LATE PAYMENT ACT ─── */
+    .lpa {
+      background: var(--black);
+      padding: 64px 32px;
+    }
+    .lpa-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .lpa-left .section-eyebrow { color: #f87171; }
+    .lpa-left .section-h2 { color: var(--white); }
+    .lpa-left .section-body { color: var(--muted); }
+    .lpa-right {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .lpa-stat {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .lpa-stat-num {
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--red);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .lpa-stat-label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ─── OBJECTIONS ─── */
+    .objections { background: var(--light); padding: 88px 32px; }
+    .obj-inner { max-width: 1040px; margin: 0 auto; }
+    .obj-header { max-width: 520px; margin-bottom: 48px; }
+    .obj-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .obj-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      border: 1px solid var(--border);
+    }
+    .obj-q { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 10px; line-height: 1.4; }
+    .obj-a { font-size: 14px; color: var(--grey); line-height: 1.75; }
+
+    /* ─── PULL QUOTE ─── */
+    .pull-quote { background: var(--red); padding: 72px 32px; text-align: center; }
+    .pull-quote-inner { max-width: 700px; margin: 0 auto; }
+    .pull-quote blockquote {
+      font-size: clamp(19px, 2.8vw, 28px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+      margin-bottom: 20px;
+    }
+    .pull-quote-meta { font-size: 14px; color: rgba(255,255,255,0.6); }
+    .pull-quote-meta strong { color: rgba(255,255,255,0.9); font-weight: 600; }
+
+    /* ─── ABOUT US / NOT A CALL CENTRE ─── */
+    .about { padding: 88px 32px; }
+    .about-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-points { display: flex; flex-direction: column; gap: 20px; margin-top: 28px; }
+    .about-point { display: flex; gap: 16px; align-items: flex-start; }
+    .about-point-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      background: var(--red-light);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-point-icon svg { color: var(--red); }
+    .about-point-text h4 { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+    .about-point-text p { font-size: 14px; color: var(--grey); line-height: 1.6; }
+    .about-right {
+      background: var(--light);
+      border-radius: 16px;
+      padding: 36px;
+      border: 1px solid var(--border);
+    }
+    .about-right-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--red);
+      margin-bottom: 16px;
+    }
+    .about-right h3 { font-size: 22px; font-weight: 800; color: var(--black); margin-bottom: 12px; letter-spacing: -0.5px; }
+    .about-right p { font-size: 14px; color: var(--grey); line-height: 1.75; margin-bottom: 20px; }
+    .about-right-stat {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .about-mini-stat { }
+    .about-mini-num { font-size: 28px; font-weight: 900; color: var(--red); letter-spacing: -1px; line-height: 1; }
+    .about-mini-label { font-size: 12px; color: var(--grey); margin-top: 4px; }
+
+    /* ─── SECTORS ─── */
+    .sectors { background: var(--light); padding: 88px 32px; }
+    .sectors-inner { max-width: 1040px; margin: 0 auto; }
+    .sectors-header { max-width: 520px; margin-bottom: 48px; }
+    .sectors-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .sector-item { border-top: 3px solid var(--red); padding-top: 20px; }
+    .sector-name { font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 10px; }
+    .sector-body { font-size: 14px; color: var(--grey); line-height: 1.75; margin-bottom: 14px; }
+    .sector-specifics {
+      list-style: none;
+      margin-bottom: 16px;
+    }
+    .sector-specifics li {
+      font-size: 13px;
+      color: var(--ink);
+      padding: 3px 0;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .sector-specifics li::before {
+      content: "–";
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .sector-tag {
+      display: inline-block;
+      background: var(--red-light);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ─── PRICING ─── */
+    .pricing { background: var(--black); padding: 88px 32px; }
+    .pricing-inner { max-width: 1040px; margin: 0 auto; }
+    .pricing-header { max-width: 520px; margin-bottom: 48px; }
+    .pricing-header .section-eyebrow { color: #f87171; }
+    .pricing-header .section-h2 { color: var(--white); }
+    .pricing-header .section-body { color: var(--muted); }
+    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .pricing-card {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 36px;
+      border: 1px solid #334155;
+      position: relative;
+    }
+    .pricing-card.featured { border-color: var(--red); }
+    .pricing-badge {
+      position: absolute;
+      top: -12px; left: 28px;
+      background: var(--red);
+      color: var(--white);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+    .pricing-name { font-size: 18px; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+    .pricing-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .pricing-rate { font-size: 44px; font-weight: 900; color: var(--red); letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+    .pricing-rate-note { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+    .pricing-compare {
+      display: inline-block;
+      background: rgba(220,38,38,0.15);
+      color: #f87171;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 6px;
+      margin-bottom: 24px;
+    }
+    .pricing-features { list-style: none; border-top: 1px solid #334155; padding-top: 20px; }
+    .pricing-features li {
+      font-size: 14px;
+      color: #cbd5e1;
+      padding: 7px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+    }
+    .pricing-features li:last-child { border-bottom: none; }
+    .pricing-features li::before {
+      content: "";
+      width: 16px; height: 16px; min-width: 16px;
+      background: var(--red);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Cpath d='M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z'/%3E%3C/svg%3E");
+      background-size: contain;
+    }
+
+    /* ─── FAQ ─── */
+    .faq { padding: 88px 32px; }
+    .faq-inner { max-width: 1040px; margin: 0 auto; }
+    .faq-header { max-width: 480px; margin-bottom: 48px; }
+    .faq-list { max-width: 700px; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 22px 0; }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .faq-a { font-size: 14px; color: var(--grey); line-height: 1.75; }
+
+    /* ─── AUDIT FORM ─── */
+    .audit { background: var(--black); padding: 88px 32px; }
+    .audit-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+    .audit-left .section-eyebrow { color: #f87171; }
+    .audit-left .section-h2 { color: var(--white); }
+    .audit-left .section-body { color: var(--muted); margin-bottom: 32px; }
+    .audit-promises { display: flex; flex-direction: column; gap: 14px; }
+    .promise-item { display: flex; gap: 12px; align-items: flex-start; }
+    .promise-dot {
+      width: 8px; height: 8px; min-width: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      margin-top: 7px;
+    }
+    .promise-text { font-size: 14px; color: #94a3b8; line-height: 1.6; }
+    .promise-text strong { color: var(--white); font-weight: 600; }
+    .audit-form {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 36px;
+    }
+    .audit-form-title { font-size: 17px; font-weight: 800; color: var(--black); margin-bottom: 4px; }
+    .audit-form-sub { font-size: 13px; color: var(--grey); margin-bottom: 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--black);
+      font-family: var(--font);
+      background: var(--white);
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-group select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.08);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .file-label {
+      display: block;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .file-label:hover { border-color: var(--red); }
+    .file-main { font-size: 13px; color: var(--grey); }
+    .file-main span { color: var(--red); font-weight: 700; }
+    .file-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+    input[type="file"] { display: none; }
+    .form-submit {
+      width: 100%;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--red-dark); transform: translateY(-1px); }
+    .form-note { font-size: 12px; color: var(--muted); text-align: center; margin-top: 12px; line-height: 1.5; }
+    .form-calendly { text-align: center; margin-top: 14px; font-size: 13px; color: var(--grey); }
+    .form-calendly a { color: var(--red); font-weight: 600; }
+    .form-calendly a:hover { text-decoration: underline; }
+
+    /* ─── FOOTER ─── */
+    footer { background: #020817; border-top: 1px solid #1e293b; padding: 40px 32px; }
+    .footer-inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand { font-size: 17px; font-weight: 900; color: var(--red); }
+    .footer-links { display: flex; gap: 24px; align-items: center; }
+    .footer-links a { font-size: 13px; color: var(--muted); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-legal { width: 100%; font-size: 12px; color: #475569; padding-top: 16px; border-top: 1px solid #1e293b; margin-top: 4px; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+      .nav-links, .nav-phone { display: none; }
+      .hero { padding: 48px 16px 40px; }
+      .trust-bar { padding: 12px 16px; }
+      .trust-bar-inner { gap: 20px; }
+      .outcomes { padding: 40px 16px; }
+      .outcomes-grid { grid-template-columns: 1fr; }
+      .outcome-item { padding: 20px 0; border-right: none; margin-right: 0; border-bottom: 1px solid #1e293b; }
+      .outcome-item:last-child { border-bottom: none; }
+      .how { padding: 56px 16px; }
+      .how-inner { grid-template-columns: 1fr; gap: 40px; }
+      .how-steps { padding-top: 0; }
+      .lpa { padding: 56px 16px; }
+      .lpa-inner { grid-template-columns: 1fr; gap: 40px; }
+      .lpa-right { grid-template-columns: 1fr 1fr; }
+      .objections { padding: 56px 16px; }
+      .obj-grid { grid-template-columns: 1fr; }
+      .pull-quote { padding: 56px 16px; }
+      .about { padding: 56px 16px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .sectors { padding: 56px 16px; }
+      .sectors-grid { grid-template-columns: 1fr; }
+      .pricing { padding: 56px 16px; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .faq { padding: 56px 16px; }
+      .audit { padding: 56px 16px; }
+      .audit-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-left">
+    <a href="#" class="nav-brand">OutstandIQ</a>
+    <div class="nav-links">
+      <a href="#how-it-works">How it works</a>
+      <a href="#sectors">Sectors</a>
+      <a href="#pricing">Pricing</a>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-phone"><span>Call us</span> 020 XXXX XXXX</div>
+    <a href="#audit" class="nav-cta">Free Audit</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Contingency-Only Debt Recovery</div>
+  <h1>Most businesses have <em>£50k–£200k</em> in invoices they've written off. We recover it.</h1>
+  <p class="hero-sub">B2B debt recovery for recruitment, construction, and legal. Free audit in 48 hours. Nothing to pay until money lands.</p>
+  <div class="hero-actions">
+    <a href="#audit" class="btn-primary">Request a Free Audit</a>
+    <span class="hero-note">48-hour turnaround &nbsp;·&nbsp; <strong>No commitment</strong></span>
+  </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-bar-inner">
+    <div class="trust-item">ICO Registered</div>
+    <div class="trust-item">CICM Member</div>
+    <div class="trust-item">UK GDPR Compliant</div>
+    <div class="trust-item">No Setup Fees</div>
+    <div class="trust-item">Commercial Debt Only</div>
+  </div>
+</div>
+
+<!-- OUTCOMES -->
+<div class="outcomes">
+  <div class="outcomes-inner">
+    <p class="outcomes-label">Recent outcomes</p>
+    <div class="outcomes-grid">
+      <div class="outcome-item">
+        <div class="outcome-sector">Recruitment</div>
+        <div class="outcome-stat">£54,000</div>
+        <div class="outcome-desc">Recovered in 45 days. The agency had written off £60k of a £73k aged debt book.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-sector">Construction</div>
+        <div class="outcome-stat">£134,000</div>
+        <div class="outcome-desc">Recovered in 60 days. £47k had been lost in a debtor's AP system — never intentionally withheld.</div>
+      </div>
+      <div class="outcome-item">
+        <div class="outcome-sector">Legal</div>
+        <div class="outcome-stat">£31,000</div>
+        <div class="outcome-desc">Recovered from invoices written off 12 months prior. Three disputed matters resolved without litigation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="how-it-works" class="how">
+  <div class="how-inner">
+    <div>
+      <p class="section-eyebrow">How it works</p>
+      <h2 class="section-h2">Stop chasing. Start recovering.</h2>
+      <p class="section-body">Your internal team will always soften the chase. That's not a criticism — it's a structural problem. The consultant who placed the candidate shouldn't be the one chasing the invoice.</p>
+      <p class="section-body" style="margin-top: 16px;">We're a named third party. We start with a free audit — no charge, no commitment — then get to work the same day you sign.</p>
+    </div>
+    <div class="how-steps">
+      <div class="step-item">
+        <div class="step-n">1</div>
+        <div class="step-text">
+          <h4>Send us your overdue invoices</h4>
+          <p>CSV, Excel, or PDF — whatever you have. We review your full book within 48 hours and tell you what's recoverable, what to deprioritise, and exactly what we'd charge. Free.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">2</div>
+        <div class="step-text">
+          <h4>We start the same day you sign</h4>
+          <p>A simple one-page agreement. Your cases are loaded immediately. Automated and manual outreach begins within 24 hours. You get a live dashboard showing every action in real time.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-n">3</div>
+        <div class="step-text">
+          <h4>Money lands. We invoice on what we collect.</h4>
+          <p>Payments go directly to your account. We invoice our fee only on successful recoveries. Weekly reports every Friday. Nothing hidden, nothing upfront.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LATE PAYMENT ACT -->
+<div class="lpa">
+  <div class="lpa-inner">
+    <div class="lpa-left">
+      <p class="section-eyebrow">Late Payment Legislation</p>
+      <h2 class="section-h2">Your debtors may owe you more than the invoice.</h2>
+      <p class="section-body">Under the Late Payment of Commercial Debts Act, you're legally entitled to claim statutory interest on every overdue B2B invoice — plus fixed recovery costs. Most businesses never pursue it. We do, on every eligible debt we take on.</p>
+    </div>
+    <div class="lpa-right">
+      <div class="lpa-stat">
+        <div class="lpa-stat-num">8%+</div>
+        <div class="lpa-stat-label">Statutory interest above Bank of England base rate on overdue invoices</div>
+      </div>
+      <div class="lpa-stat">
+        <div class="lpa-stat-num">£100</div>
+        <div class="lpa-stat-label">Fixed recovery costs claimable on invoices over £10,000</div>
+      </div>
+      <div class="lpa-stat">
+        <div class="lpa-stat-num">1998</div>
+        <div class="lpa-stat-label">The Late Payment Act — a legal right most businesses don't use</div>
+      </div>
+      <div class="lpa-stat">
+        <div class="lpa-stat-num">6 yrs</div>
+        <div class="lpa-stat-label">Statute of limitations on commercial debt in England & Wales</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTIONS -->
+<div class="objections">
+  <div class="obj-inner">
+    <div class="obj-header">
+      <p class="section-eyebrow">Common concerns</p>
+      <h2 class="section-h2">Questions we get every time</h2>
+    </div>
+    <div class="obj-grid">
+      <div class="obj-card">
+        <p class="obj-q">"Won't this damage our client relationships?"</p>
+        <p class="obj-a">Our approach is professional and calibrated — never aggressive. We contact debtors as a named third-party recovery partner. Most client relationships survive a well-handled escalation. The ones that don't were already under strain.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"What if you don't recover anything?"</p>
+        <p class="obj-a">You pay nothing. Not a penny in fees, setup costs, or admin charges. Our entire model is contingency-only. If we don't collect, we don't get paid. That's not a marketing line — it's written into every agreement.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"We've already chased these ourselves."</p>
+        <p class="obj-a">That's the most common situation we're brought into. Internal chasers and a named external firm land very differently with debtors. A structured escalation from a third party signals you're serious. That changes behaviour.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"Are you regulated? What about our data?"</p>
+        <p class="obj-a">We're ICO registered and process debtor data under UK GDPR as a data processor on your behalf. Every engagement includes a data processing schedule. Your data is never sold, shared, or retained beyond the engagement.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"How do you recover debt that's 90+ days old?"</p>
+        <p class="obj-a">Most aged debt falls into three categories: genuinely disputed, lost in a debtor's AP system, or intentionally delayed. Each needs a different approach. The audit tells us which is which before we spend time on the wrong ones.</p>
+      </div>
+      <div class="obj-card">
+        <p class="obj-q">"What's the minimum you'll take on?"</p>
+        <p class="obj-a">Portfolios from £5,000 total. Individual invoices in a Recovery Sprint from £500. If your portfolio is below this, we'll tell you clearly in the audit rather than take it on and underdeliver.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PULL QUOTE -->
+<div class="pull-quote">
+  <div class="pull-quote-inner">
+    <blockquote>"We'd written off about £90,000 of it. They came back and said £95,000 of the total was realistically recoverable. Our reaction was: we assumed most of that was gone."</blockquote>
+    <p class="pull-quote-meta"><strong>Finance Director</strong> &nbsp;·&nbsp; UK Recruitment Agency &nbsp;·&nbsp; £140,000 aged debt book</p>
+  </div>
+</div>
+
+<!-- ABOUT / ONE PERSON NOT A CALL CENTRE -->
+<div class="about">
+  <div class="about-inner">
+    <div>
+      <p class="section-eyebrow">How we work</p>
+      <h2 class="section-h2">One contact. Not a call centre.</h2>
+      <p class="section-body">Most debt collection agencies are high-volume operations. Cases get pooled, passed around, and deprioritised.</p>
+      <div class="about-points">
+        <div class="about-point">
+          <div class="about-point-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          </div>
+          <div class="about-point-text">
+            <h4>One named account manager throughout</h4>
+            <p>You deal with the same person from the free audit through to the final recovery report. No handoffs, no repeating yourself.</p>
+          </div>
+        </div>
+        <div class="about-point">
+          <div class="about-point-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div class="about-point-text">
+            <h4>Full visibility, always</h4>
+            <p>Your live dashboard shows every chaser sent, every response received, and your current recovery total. Nothing happens that you can't see.</p>
+          </div>
+        </div>
+        <div class="about-point">
+          <div class="about-point-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </div>
+          <div class="about-point-text">
+            <h4>Weekly reports, every Friday</h4>
+            <p>Recovered this week. Total to date. Cases in active communication. No chasing us for updates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <p class="about-right-label">Our track record</p>
+      <h3>Built on Equisettle — purpose-built debt recovery technology</h3>
+      <p>We run every client case on Equisettle, a purpose-built debt recovery platform that automates chaser sequences, tracks every debtor interaction, and surfaces the highest-probability recoveries first. You get the benefits of enterprise-grade technology without the enterprise price.</p>
+      <div class="about-right-stat">
+        <div class="about-mini-stat">
+          <div class="about-mini-num">60–80%</div>
+          <div class="about-mini-label">Typical recovery rate on aged portfolios</div>
+        </div>
+        <div class="about-mini-stat">
+          <div class="about-mini-num">48hrs</div>
+          <div class="about-mini-label">Free audit turnaround</div>
+        </div>
+        <div class="about-mini-stat">
+          <div class="about-mini-num">0%</div>
+          <div class="about-mini-label">Upfront cost</div>
+        </div>
+        <div class="about-mini-stat">
+          <div class="about-mini-num">£0</div>
+          <div class="about-mini-label">Setup fees, ever</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTORS -->
+<div id="sectors" class="sectors">
+  <div class="sectors-inner">
+    <div class="sectors-header">
+      <p class="section-eyebrow">Sectors</p>
+      <h2 class="section-h2">Sector specialists</h2>
+      <p class="section-body">We focus on the three sectors where late payment is most persistent and where we understand the debt patterns cold.</p>
+    </div>
+    <div class="sectors-grid">
+      <div class="sector-item">
+        <p class="sector-name">Recruitment & Staffing</p>
+        <p class="sector-body">The UK's highest late-payment sector. Placement fees, temp payroll, and contract invoices sitting 60–90+ days are the norm — not the exception.</p>
+        <ul class="sector-specifics">
+          <li>Placement fee disputes</li>
+          <li>Temp and contract invoice arrears</li>
+          <li>Repeat debtor patterns across consultants</li>
+        </ul>
+        <span class="sector-tag">Primary sector</span>
+      </div>
+      <div class="sector-item">
+        <p class="sector-name">Construction</p>
+        <p class="sector-body">Retention disputes, slow-paying main contractors, and subcontractor chain delays create some of the most complex aged debt in UK business.</p>
+        <ul class="sector-specifics">
+          <li>Retention and final account disputes</li>
+          <li>Main contractor payment delays</li>
+          <li>Subcontractor chain issues</li>
+        </ul>
+        <span class="sector-tag">Sector specialist</span>
+      </div>
+      <div class="sector-item">
+        <p class="sector-name">Legal</p>
+        <p class="sector-body">Law firms and barristers' chambers often can't pursue professional clients aggressively. We act as an extension of your practice.</p>
+        <ul class="sector-specifics">
+          <li>Solicitor and counsel fee recovery</li>
+          <li>Disbursement debt</li>
+          <li>Professional client relationship handling</li>
+        </ul>
+        <span class="sector-tag">Sector specialist</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" class="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header">
+      <p class="section-eyebrow">Pricing</p>
+      <h2 class="section-h2">You pay nothing until we collect.</h2>
+      <p class="section-body">No setup fees. No admin charges. No membership. We make money when you make money.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Most popular</div>
+        <p class="pricing-name">Ongoing Recovery</p>
+        <p class="pricing-desc">We manage your active debtor book on a rolling basis. New overdue invoices in, recovered cash out.</p>
+        <div class="pricing-rate">10–12%</div>
+        <p class="pricing-rate-note">of each recovered invoice</p>
+        <div class="pricing-compare">Market average: 10–15% + setup fees</div>
+        <ul class="pricing-features">
+          <li>No setup fees or admin charges</li>
+          <li>Automated chasers from day one</li>
+          <li>Live recovery dashboard</li>
+          <li>Weekly recovery reports</li>
+          <li>Payment plans negotiated</li>
+          <li>Minimum portfolio: £5,000</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-name">Recovery Sprint</p>
+        <p class="pricing-desc">A focused 60-day campaign on your aged debt — invoices 60 days or more overdue. One-time, no ongoing commitment.</p>
+        <div class="pricing-rate">15–18%</div>
+        <p class="pricing-rate-note">60–120 days: 15% &nbsp;·&nbsp; 120d+: 18%</p>
+        <div class="pricing-compare">Market average: 15–30% + fees</div>
+        <ul class="pricing-features">
+          <li>Nothing to pay until we recover</li>
+          <li>48-hour triage and debt scoring</li>
+          <li>60-day intensive campaign</li>
+          <li>Statutory interest claimed on your behalf</li>
+          <li>Full outcome report on close</li>
+          <li>Minimum: £500 per invoice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <p class="section-eyebrow">Questions</p>
+      <h2 class="section-h2">Common questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <p class="faq-q">How long does a Recovery Sprint take?</p>
+        <p class="faq-a">Typically 60–90 days. We include a timeline estimate in the free audit response based on your specific debt mix and debtor profile.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What happens if a debtor disputes an invoice?</p>
+        <p class="faq-a">We categorise disputed debts in the audit and handle them separately. We don't chase a genuinely disputed invoice — we flag it and advise on resolution options. Included in the audit at no cost.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Can I use OutstandIQ for a single large invoice?</p>
+        <p class="faq-a">Yes. A single invoice at £500 or more can be taken on as a Recovery Sprint. Submit it through the audit form and we'll assess it within 48 hours.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">What does the free audit actually involve?</p>
+        <p class="faq-a">You send your overdue invoice list. We categorise each debt, estimate what's recoverable and what isn't, and return a written breakdown with our proposed fee. No charge, no obligation.</p>
+      </div>
+      <div class="faq-item">
+        <p class="faq-q">Do you handle consumer debt?</p>
+        <p class="faq-a">No. We work exclusively on commercial B2B debt — business-to-business invoices only.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AUDIT FORM -->
+<div id="audit" class="audit">
+  <div class="audit-inner">
+    <div class="audit-left">
+      <p class="section-eyebrow">Free Debt Audit</p>
+      <h2 class="section-h2">What's in your debt book?</h2>
+      <p class="section-body">Send us your overdue invoices. We'll tell you what's realistically recoverable, what to deprioritise, and what we'd charge — within 48 hours.</p>
+      <div class="audit-promises">
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          <p class="promise-text"><strong>48-hour turnaround.</strong> Written breakdown of your full book.</p>
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          <p class="promise-text"><strong>No commitment required.</strong> Free regardless of whether you proceed.</p>
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          <p class="promise-text"><strong>No sales call</strong> unless you want one. We respond by email.</p>
+        </div>
+        <div class="promise-item">
+          <div class="promise-dot"></div>
+          <p class="promise-text"><strong>ICO registered.</strong> UK GDPR compliant. Your data is never shared.</p>
+        </div>
+      </div>
+    </div>
+    <div class="audit-form">
+      <p class="audit-form-title">Request your free audit</p>
+      <p class="audit-form-sub">2 minutes. Response within 48 hours.</p>
+      <form action="https://formspree.io/f/mpqoeezr" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Acme Recruitment Ltd" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Work email</label>
+          <input type="email" id="email" name="email" placeholder="jane@acmerecruitment.co.uk" required>
+        </div>
+        <div class="form-group">
+          <label for="debt_value">Approximate value of overdue invoices</label>
+          <select id="debt_value" name="debt_value" required>
+            <option value="" disabled selected>Select a range</option>
+            <option value="under_10k">Under £10,000</option>
+            <option value="10k_50k">£10,000 – £50,000</option>
+            <option value="50k_150k">£50,000 – £150,000</option>
+            <option value="150k_plus">Over £150,000</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sector">Sector</label>
+          <select id="sector" name="sector" required>
+            <option value="" disabled selected>Select your industry</option>
+            <option value="recruitment">Recruitment / Staffing</option>
+            <option value="construction">Construction / Trades</option>
+            <option value="legal">Legal / Solicitors</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Aged debt list — optional, speeds up the audit</label>
+          <label class="file-label" for="file">
+            <input type="file" id="file" name="file" accept=".csv,.xlsx,.xls,.pdf">
+            <p class="file-main" id="file-text"><span>Upload file</span> or drag and drop</p>
+            <p class="file-sub">CSV, Excel, or PDF &nbsp;·&nbsp; Max 10MB</p>
+          </label>
+        </div>
+        <button type="submit" class="form-submit">Request My Free Debt Audit</button>
+        <p class="form-note">No commitment. No sales call unless you request one. UK GDPR compliant.</p>
+      </form>
+      <p class="form-calendly">Prefer a call? <a href="https://calendly.com/REPLACE_WITH_YOUR_LINK">Book a free 15 minutes</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">OutstandIQ</div>
+    <div class="footer-links">
+      <a href="tel:+44XXXXXXXXXX">020 XXXX XXXX</a>
+      <a href="mailto:hello@outstandiq.co.uk">hello@outstandiq.co.uk</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+    </div>
+    <p class="footer-legal">OutstandIQ Ltd &nbsp;·&nbsp; Registered in England and Wales &nbsp;·&nbsp; ICO Registered &nbsp;·&nbsp; CICM Member &nbsp;·&nbsp; B2B commercial debt only</p>
+  </div>
+</footer>
+
+<script>
+  const fileInput = document.getElementById('file');
+  const fileText = document.getElementById('file-text');
+  if (fileInput && fileText) {
+    fileInput.addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+        fileText.innerHTML = this.files[0].name;
+      }
+    });
+  }
+</script>
+
+</body>
+</html>
