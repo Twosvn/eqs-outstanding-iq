@@ -127,6 +127,21 @@
   to = "/blog/shopify-wholesale-unpaid-invoices/"
   status = 301
 
+[[redirects]]
+  from = "/blog/kolleno-alternative"
+  to = "/blog/kolleno-alternative/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/stuut-alternative"
+  to = "/blog/stuut-alternative/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/highradius-blackline-aged-debt"
+  to = "/blog/highradius-blackline-aged-debt/"
+  status = 301
+
 # ─── CUSTOM 404 ───
 [[redirects]]
   from = "/*"
