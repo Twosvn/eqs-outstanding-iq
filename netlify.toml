@@ -92,6 +92,31 @@
   to = "/debt-collection-bristol/"
   status = 301
 
+[[redirects]]
+  from = "/logistics-debt-recovery"
+  to = "/logistics-debt-recovery/"
+  status = 301
+
+[[redirects]]
+  from = "/ecommerce-debt-recovery"
+  to = "/ecommerce-debt-recovery/"
+  status = 301
+
+[[redirects]]
+  from = "/fashion-debt-recovery"
+  to = "/fashion-debt-recovery/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/recruitment-cash-flow"
+  to = "/blog/recruitment-cash-flow/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/unpaid-invoices-logistics-fashion-ecommerce"
+  to = "/blog/unpaid-invoices-logistics-fashion-ecommerce/"
+  status = 301
+
 # ─── CUSTOM 404 ───
 [[redirects]]
   from = "/*"

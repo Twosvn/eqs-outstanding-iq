@@ -57,4 +57,39 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://fynrec.co.uk/logistics-debt-recovery/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://fynrec.co.uk/ecommerce-debt-recovery/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://fynrec.co.uk/fashion-debt-recovery/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://fynrec.co.uk/blog/recruitment-cash-flow/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://fynrec.co.uk/blog/unpaid-invoices-logistics-fashion-ecommerce/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

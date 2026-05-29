@@ -66,6 +66,13 @@ nav {
   color: var(--ink);
 }
 .nav-phone span { color: var(--grey); font-weight: 400; font-size: 12px; margin-right: 4px; }
+.nav-whatsapp {
+  display: flex;
+  align-items: center;
+  color: #25D366;
+  transition: opacity 0.15s;
+}
+.nav-whatsapp:hover { opacity: 0.75; }
 .nav-cta {
   background: var(--red);
   color: var(--white) !important;

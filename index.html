@@ -18,21 +18,7 @@
 <body>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-left">
-    <a href="#" class="nav-brand">Fynrec</a>
-    <div class="nav-links">
-      <a href="#how-it-works">How it works</a>
-      <a href="#sectors">Sectors</a>
-      <a href="#pricing">Pricing</a>
-      <a href="/blog/">Blog</a>
-    </div>
-  </div>
-  <div class="nav-right">
-    <div class="nav-phone"><span>Call us</span> 07765 875615</div>
-    <a href="#audit" class="nav-cta">Free Audit</a>
-  </div>
-</nav>
+<div id="site-nav"></div>
 
 <!-- HERO -->
 <div class="hero">
@@ -48,6 +34,7 @@
 <!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-bar-inner">
+    <div class="trust-item">15 Years' Experience</div>
     <div class="trust-item">ICO Registered</div>
     <div class="trust-item">CICM Member</div>
     <div class="trust-item">UK GDPR Compliant</div>
@@ -166,7 +153,7 @@
       </div>
       <div class="obj-card">
         <p class="obj-q">"Are you regulated? What about our data?"</p>
-        <p class="obj-a">We're ICO registered and process debtor data under UK GDPR as a data processor on your behalf. Every engagement includes a data processing schedule. Your data is never sold, shared, or retained beyond the engagement.</p>
+        <p class="obj-a">We work exclusively on B2B commercial debt — which falls outside FCA scope entirely. FCA authorisation applies to consumer debt collection, not commercial recovery. Our credentials are the ones that matter: ICO registered, CICM member, and UK GDPR compliant. Every engagement includes a data processing schedule. Your data is never sold, shared, or retained beyond the engagement.</p>
       </div>
       <div class="obj-card">
         <p class="obj-q">"How do you recover debt that's 90+ days old?"</p>
@@ -231,16 +218,16 @@
       <p>We run every client case on Equisettle, a purpose-built debt recovery platform that automates chaser sequences, tracks every debtor interaction, and surfaces the highest-probability recoveries first. You get the benefits of enterprise-grade technology without the enterprise price.</p>
       <div class="about-right-stat">
         <div class="about-mini-stat">
+          <div class="about-mini-num">15 yrs</div>
+          <div class="about-mini-label">Experience in commercial debt recovery</div>
+        </div>
+        <div class="about-mini-stat">
           <div class="about-mini-num">60–80%</div>
           <div class="about-mini-label">Typical recovery rate on aged portfolios</div>
         </div>
         <div class="about-mini-stat">
           <div class="about-mini-num">48hrs</div>
           <div class="about-mini-label">Free audit turnaround</div>
-        </div>
-        <div class="about-mini-stat">
-          <div class="about-mini-num">0%</div>
-          <div class="about-mini-label">Upfront cost</div>
         </div>
         <div class="about-mini-stat">
           <div class="about-mini-num">£0</div>
@@ -451,18 +438,8 @@
 </div>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">Fynrec</div>
-    <div class="footer-links">
-      <a href="tel:+447765875615">07765 875615</a>
-      <a href="mailto:hello@fynrec.co.uk">hello@fynrec.co.uk</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Terms</a>
-    </div>
-    <p class="footer-legal">Fynrec Ltd &nbsp;·&nbsp; Registered in England and Wales &nbsp;·&nbsp; ICO Registered &nbsp;·&nbsp; CICM Member &nbsp;·&nbsp; B2B commercial debt only</p>
-  </div>
-</footer>
+<div id="site-footer"></div>
+<script src="/components.js"></script>
 
 <script>
   const fileInput = document.getElementById('file');
