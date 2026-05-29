@@ -1,0 +1,99 @@
+[build]
+  publish = "."
+
+[build.processing]
+  skip_processing = false
+
+[build.processing.html]
+  pretty_urls = true
+
+# ─── SECURITY + PERF HEADERS FOR ALL PAGES ───
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# ─── LONG-LIVED CACHE FOR STYLESHEET ───
+[[headers]]
+  for = "/styles.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ─── SHORT CACHE FOR HTML (SEO freshness) ───
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+# ─── LONG CACHE FOR FONTS / IMAGES ───
+[[headers]]
+  for = "/*.woff2"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.jpg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.svg"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ─── WWW → NON-WWW CANONICAL ───
+[[redirects]]
+  from = "https://www.fynrec.co.uk/*"
+  to = "https://fynrec.co.uk/:splat"
+  status = 301
+  force = true
+
+# ─── TRAILING SLASH NORMALISATION ───
+[[redirects]]
+  from = "/blog"
+  to = "/blog/"
+  status = 301
+
+[[redirects]]
+  from = "/debt-collection-london"
+  to = "/debt-collection-london/"
+  status = 301
+
+[[redirects]]
+  from = "/debt-collection-manchester"
+  to = "/debt-collection-manchester/"
+  status = 301
+
+[[redirects]]
+  from = "/debt-collection-birmingham"
+  to = "/debt-collection-birmingham/"
+  status = 301
+
+[[redirects]]
+  from = "/debt-collection-leeds"
+  to = "/debt-collection-leeds/"
+  status = 301
+
+[[redirects]]
+  from = "/debt-collection-bristol"
+  to = "/debt-collection-bristol/"
+  status = 301
+
+# ─── CUSTOM 404 ───
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
