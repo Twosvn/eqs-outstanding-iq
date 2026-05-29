@@ -588,21 +588,28 @@ input[type="file"] { display: none; }
 .form-calendly a:hover { text-decoration: underline; }
 
 /* ─── FOOTER ─── */
-footer { background: #020817; border-top: 1px solid #1e293b; padding: 40px 32px; }
+footer { background: #020817; border-top: 1px solid #1e293b; padding: 56px 32px 32px; }
 .footer-inner {
   max-width: 1040px;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid #1e293b;
 }
+.footer-brand-col { display: flex; flex-direction: column; gap: 12px; }
 .footer-brand { font-size: 17px; font-weight: 900; color: var(--red); }
-.footer-links { display: flex; gap: 24px; align-items: center; }
-.footer-links a { font-size: 13px; color: var(--muted); transition: color 0.15s; }
-.footer-links a:hover { color: var(--white); }
-.footer-legal { width: 100%; font-size: 12px; color: #475569; padding-top: 16px; border-top: 1px solid #1e293b; margin-top: 4px; }
+.footer-tagline { font-size: 13px; color: #64748b; line-height: 1.5; max-width: 220px; }
+.footer-contact { display: flex; flex-direction: column; gap: 6px; margin-top: 4px; }
+.footer-contact a { font-size: 13px; color: var(--muted); transition: color 0.15s; }
+.footer-contact a:hover { color: white; }
+.footer-col { display: flex; flex-direction: column; gap: 10px; }
+.footer-col-title { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 2px; }
+.footer-col a { font-size: 13px; color: var(--muted); transition: color 0.15s; line-height: 1; }
+.footer-col a:hover { color: white; }
+.footer-bottom { max-width: 1040px; margin: 0 auto; padding-top: 24px; }
+.footer-legal { font-size: 12px; color: #475569; }
 
 /* ─── BREADCRUMB ─── */
 .breadcrumb {
@@ -908,7 +915,8 @@ footer { background: #020817; border-top: 1px solid #1e293b; padding: 40px 32px;
   .audit { padding: 56px 16px; }
   .audit-inner { grid-template-columns: 1fr; gap: 40px; }
   .form-row { grid-template-columns: 1fr; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-brand-col { grid-column: 1 / -1; }
   .blog-hero { padding: 40px 16px 32px; }
   .article-wrap { padding: 0 16px 56px; }
   .blog-listing { padding: 40px 16px 56px; }
