@@ -117,6 +117,16 @@
   to = "/blog/unpaid-invoices-logistics-fashion-ecommerce/"
   status = 301
 
+[[redirects]]
+  from = "/shopify-wholesale-debt-recovery"
+  to = "/shopify-wholesale-debt-recovery/"
+  status = 301
+
+[[redirects]]
+  from = "/blog/shopify-wholesale-unpaid-invoices"
+  to = "/blog/shopify-wholesale-unpaid-invoices/"
+  status = 301
+
 # ─── CUSTOM 404 ───
 [[redirects]]
   from = "/*"
