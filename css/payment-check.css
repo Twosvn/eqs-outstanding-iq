@@ -106,3 +106,19 @@
 .document-page h2 { font-size:24px; letter-spacing:-.5px; margin:32px 0 12px; }
 .document-page p { color:var(--grey); margin:16px 0; line-height:1.8; }
 .payment-check section[id] { scroll-margin-top:82px; }
+
+/* Account and moderation screens use the same forms and brand tokens. */
+.account-strip { display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px; padding-top:18px; padding-bottom:18px; font-size:13px; border-bottom:1px solid var(--border); }
+.account-grid { display:grid; grid-template-columns:1fr 1fr; align-items:start; gap:24px; margin-top:32px; }
+.account-grid h2, #password h2 { font-size:24px; letter-spacing:-.5px; }
+.share-actions { display:flex; align-items:center; flex-wrap:wrap; gap:18px; margin:24px 0; font-size:13px; }
+.share-status input { display:block; width:100%; padding:8px; }
+.evidence-link { display:block; margin:12px 0; }
+.moderation-payload { white-space:pre-wrap; overflow-wrap:anywhere; padding:20px; background:var(--light); border-radius:8px; margin:18px 0; font-size:13px; }
+#moderation-items .pc-form { margin-top:24px; }
+.company-directory { padding-left:20px; margin:24px 0; }
+.company-directory li { margin:14px 0; }
+.payment-check .pc-form input[type=file] { display:block; }
+.payment-check .checkbox-field input { accent-color:var(--red); }
+.nav-account { color:var(--grey); font-size:13px; font-weight:600; white-space:nowrap; }
+@media(max-width:768px) { .account-grid { grid-template-columns:1fr; } .nav-account { font-size:12px; } .nav-right { gap:12px; } }

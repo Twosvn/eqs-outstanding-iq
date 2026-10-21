@@ -143,6 +143,37 @@
   to = "/blog/highradius-blackline-aged-debt/"
   status = 301
 
+# Payment Check endpoints must precede the catch-all 404.
+[[redirects]]
+  from = "/api/payment/*"
+  to = "/.netlify/functions/payment-api?route=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment-check/reports/:id/"
+  to = "/.netlify/functions/payment-public?id=:id"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment-check/companies/"
+  to = "/.netlify/functions/payment-public"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment-check/companies/:number/"
+  to = "/.netlify/functions/payment-public?number=:number"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/payment-check/sitemap.xml"
+  to = "/.netlify/functions/payment-public?mode=sitemap"
+  status = 200
+  force = true
+
 # ─── CUSTOM 404 ───
 [[redirects]]
   from = "/*"

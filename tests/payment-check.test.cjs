@@ -78,62 +78,14 @@ test('company search fails clearly without an API key and never exposes upstream
     else process.env.COMPANIES_HOUSE_API_KEY = key;
   }
 });
-test('forms have matching static detection fields and private moderation destination', () => {
+test('forms submit through the authenticated backend and do not use Netlify Forms', () => {
   const html = readFileSync(path.join(root, 'payment-check/index.html'), 'utf8');
-  for (const name of ['payment-review', 'payment-response', 'payment-source']) {
-    assert.ok(html.includes(`name="${name}" method="POST"`));
-    assert.ok(html.includes(`name="form-name" value="${name}"`));
-  }
-  assert.equal((html.match(/data-netlify="true"/g) || []).length, 3);
-  const js = readFileSync(path.join(root, 'js/payment-check.js'), 'utf8');
+  assert.equal((html.match(/action="\/api\/payment\/submit"/g) || []).length,3);
+  assert.ok(!html.includes('data-netlify'));
+  assert.ok(html.includes('name="evidence" type="file"'));
+  assert.ok(html.includes('/js/payment-api.js'));
+  const js=readFileSync(path.join(root,'js/payment-check.js'),'utf8');
   assert.ok(!js.includes('innerHTML'));
-  assert.ok(html.includes('name="submission-type" value="external-payment-source"'));
-  assert.ok(html.includes('name="source-url" type="url" required'));
-  assert.ok(html.includes('name="payment-only"'));
-  assert.ok(!html.includes('<option value="on-time">'));
-  assert.ok(js.includes("PaymentRecords.validSourceUrl(form.elements['source-url'].value)"));
-  assert.ok(js.includes("$('#source-form')"));
-  assert.ok(!js.includes("fetch(form.elements['source-url']"));
-  assert.ok(js.includes('Preview only: nothing has been sent.'));
-  assert.ok(js.includes('recordsAvailable = false'));
-  assert.ok(readFileSync(path.join(root, 'components.js'), 'utf8').includes('href="/payment-check/"'));
-});
-test('public directory contains only approved public fields and no private contact details', () => {
-  const data = JSON.parse(readFileSync(path.join(root, 'payment-check/reviews.json'), 'utf8'));
-  const allowed = ['id', 'companyName', 'companyNumber', 'reviewerBusiness', 'title', 'experience', 'outcome', 'paymentTerms', 'dueDate', 'paidDate', 'publishedAt', 'response'];
-  const ids = new Set();
-  for (const review of data) {
-    for (const key of Object.keys(review)) assert.ok(allowed.includes(key), `Unexpected public field: ${key}`);
-    for (const key of ['id', 'companyName', 'reviewerBusiness', 'title', 'experience', 'paymentTerms']) assert.ok(typeof review[key] === 'string' && review[key].trim());
-    assert.ok(!ids.has(review.id)); ids.add(review.id);
-    assert.ok(records.validCompanyNumber(review.companyNumber));
-    assert.ok(['late-paid', 'unpaid', 'disputed'].includes(review.outcome));
-    for (const key of ['dueDate', 'publishedAt', ...(review.paidDate ? ['paidDate'] : [])]) assert.match(review[key], /^\d{4}-\d{2}-\d{2}$/);
-    if (review.response) {
-      assert.deepEqual(Object.keys(review.response).sort(), ['publishedAt', 'text']);
-      assert.equal(typeof review.response.text, 'string');
-      assert.match(review.response.publishedAt, /^\d{4}-\d{2}-\d{2}$/);
-    }
-  }
-});
-
-test('build generates crawlable company pages, stable links and sitemap without HTML injection', () => {
-  const fs = require('node:fs');
-  const os = require('node:os');
-  const { companyPages } = require('../scripts/build.cjs');
-  const output = fs.mkdtempSync(path.join(os.tmpdir(), 'fynrec-pages-'));
-  try {
-    const fixture = [{ id: 'PC-1', companyName: 'Example <Company>', companyNumber: '01234567', reviewerBusiness: 'Supplier', title: 'Paid late', experience: '<script>not executable</script>', outcome: 'late-paid', paymentTerms: '30 days', dueDate: '2026-09-01', paidDate: '2026-09-12', publishedAt: '2026-10-21', response: { text: 'Resolved', publishedAt: '2026-10-21' } }];
-    const sitemap = companyPages(fixture, output, '<urlset></urlset>');
-    const html = fs.readFileSync(path.join(output, 'payment-check/companies/01234567/index.html'), 'utf8');
-    assert.ok(html.includes('rel="canonical" href="https://fynrec.com/payment-check/companies/01234567/"'));
-    assert.ok(html.includes('Example &lt;Company&gt;'));
-    assert.ok(html.includes('&lt;script&gt;not executable&lt;/script&gt;'));
-    assert.ok(!html.includes('<script>not executable'));
-    assert.ok(html.includes('Resolved'));
-    assert.ok(html.includes('2026-09-12'));
-    assert.ok(sitemap.includes('<loc>https://fynrec.com/payment-check/companies/01234567/</loc>'));
-    const index = fs.readFileSync(path.join(output, 'payment-check/companies/index.html'), 'utf8');
-    assert.ok(index.includes('href="/payment-check/companies/01234567/"'));
-  } finally { fs.rmSync(output, { recursive: true, force: true }); }
+  assert.ok(!js.includes('reviews.json'));
+  assert.ok(js.includes("PaymentAPI.request('submit'"));
 });

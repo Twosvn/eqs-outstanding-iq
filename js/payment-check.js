@@ -1,10 +1,9 @@
-/* Published records only. Incoming reviews remain in Netlify Forms until moderated. */
+/* Public data comes from the approved database view; submissions use the authenticated API. */
 'use strict';
 const $ = selector => document.querySelector(selector);
 let published = [];
 let recordsAvailable = true;
 let latestSearch = 0;
-let recordsReady;
 const outcomes = { 'late-paid': 'Paid late · settled', unpaid: 'Still unpaid at review date', disputed: 'Invoice disputed' };
 const textNode = (tag, value, className) => {
   const element = document.createElement(tag);
@@ -14,12 +13,15 @@ const textNode = (tag, value, className) => {
 };
 const visibleDate = value => new Date(`${value}T12:00:00Z`).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
-recordsReady = fetch('/payment-check/reviews.json', { cache: 'no-cache' })
-  .then(response => { if (!response.ok) throw new Error('Records unavailable'); return response.json(); })
-  .then(records => { if (!Array.isArray(records)) throw new Error('Invalid records'); published = records; })
-  .catch(() => { recordsAvailable = false; });
+PaymentAPI.request('me').then(data=>{
+  const banner=$('#session-banner');
+  banner.textContent=`Signed in as ${data.user.email}. `;
+  const account=textNode('a','Manage your reports →');account.href='/payment-check/account/';banner.append(account);
+}).catch(()=>{});
 
-function chooseCompany(company) {
+async function chooseCompany(company) {
+  recordsAvailable = true;
+  try { published=(await PaymentAPI.request(`public?company=${encodeURIComponent(company.number)}`)).reviews; } catch { published=[];recordsAvailable=false; }
   $('#company-profile').hidden = false;
   $('#search-results').hidden = true;
   $('#profile-name').textContent = company.name;
@@ -33,7 +35,7 @@ function chooseCompany(company) {
   const reviews = published.filter(record => record.companyNumber === company.number);
   const summary = PaymentRecords.summary(reviews);
   $('#record-summary').replaceChildren();
-  for (const [value, label] of [[recordsAvailable ? summary.count : 'Unavailable', 'published payment reports'], [recordsAvailable ? summary.unpaid : 'Unavailable', 'reported unpaid'], [recordsAvailable ? summary.settled : 'Unavailable', 'paid late · settled'], [recordsAvailable ? summary.disputed : 'Unavailable', 'reported disputed']]) {
+  for (const [value, label] of [[recordsAvailable ? summary.count : 'Unavailable', 'published payment reports shown'], [recordsAvailable ? summary.unpaid : 'Unavailable', 'reported unpaid'], [recordsAvailable ? summary.settled : 'Unavailable', 'paid late · settled'], [recordsAvailable ? summary.disputed : 'Unavailable', 'reported disputed']]) {
     const stat = textNode('div', '', 'summary-stat');
     stat.append(textNode('strong', value), textNode('span', label, 'muted'));
     $('#record-summary').append(stat);
@@ -54,8 +56,9 @@ function chooseCompany(company) {
       reply.append(textNode('strong', 'Company response'), textNode('p', review.response.text), textNode('p', visibleDate(review.response.publishedAt), 'review-meta'));
       article.append(reply);
     }
-    const permalink = textNode('a', 'Open company payment page →');
-    permalink.href = `/payment-check/companies/${encodeURIComponent(company.number)}/`;
+    const permalink = textNode('a', 'Open report →');
+    permalink.href = `/payment-check/reports/${encodeURIComponent(review.id)}/`;
+    const share=textNode('button','Share report','text-button');share.type='button';share.dataset.sharePath=permalink.href;share.dataset.shareTitle=review.title;article.append(share,document.createElement('br'));
     article.append(permalink, document.createElement('br'));
     const respond = textNode('a', 'Respond, correct or update this review →');
     respond.href = '#respond';
@@ -88,7 +91,7 @@ $('#company-search').addEventListener('submit', async event => {
   } catch (error) {
     warning = error instanceof SyntaxError ? 'Registered company search is unavailable in this preview.' : error.message;
   }
-  await recordsReady;
+  try { published=(await PaymentAPI.request(`public?q=${encodeURIComponent(q)}`)).reviews;recordsAvailable=true; } catch {published=[];recordsAvailable=false;}
   if (sequence !== latestSearch) return;
   for (const record of PaymentRecords.search(published, q)) {
     if (!companies.some(company => company.number === record.companyNumber)) companies.push({ name: record.companyName, number: record.companyNumber });
@@ -108,6 +111,7 @@ $('#search-query').addEventListener('input', event => event.target.setCustomVali
 $('#back-results').addEventListener('click', () => { $('#company-profile').hidden = true; $('#search-results').hidden = false; $('#search-query').focus(); });
 
 for (const form of [$('#review-form'), $('#response-form'), $('#source-form')]) {
+  form.addEventListener('input',()=>{delete form.dataset.requestId;});
   form.elements['company-number'].addEventListener('input', event => { event.target.value = event.target.value.toUpperCase(); });
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -121,20 +125,35 @@ for (const form of [$('#review-form'), $('#response-form'), $('#source-form')]) 
       status.textContent = 'Enter a public http or https link to the original payment complaint, without login details.';
       return;
     }
-    if (['localhost', '127.0.0.1', ''].includes(location.hostname)) {
-      status.textContent = 'Preview only: nothing has been sent. Review submission becomes available on the configured Netlify site.';
-      return;
-    }
     const button = form.querySelector('button[type=submit]');
     button.disabled = true;
     status.textContent = 'Sending securely…';
     try {
-      const response = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
-      if (!response.ok) throw new Error('Submission failed');
-      status.textContent = form.id === 'source-form' ? 'Your link has been sent for private assessment. It is not a published or verified payment report. We may contact you for more information.' : 'Your submission has been sent for review. It is not public. Please check your email for any follow-up from Fynrec.';
+      const fields=Object.fromEntries(new FormData(form));
+      delete fields.evidence;
+      const kind={'review-form':'review','response-form':'response','source-form':'source'}[form.id];
+      const evidence=kind==='review'?await PaymentAPI.evidence(form.elements.evidence.files[0]):undefined;
+      if (!form.dataset.requestId) form.dataset.requestId=crypto.randomUUID();
+      const result=await PaymentAPI.request('submit',{id:form.dataset.requestId,kind,fields,evidence});
+      status.textContent=`${result.message} Reference: ${result.id}`;
+      delete form.dataset.requestId;
       form.reset();
-    } catch {
-      status.textContent = 'We could not confirm your submission. Your entries are still here; please try again shortly.';
+    } catch(error) {
+      status.textContent=error.message;
+      if (error.status===401) {const link=textNode('a',' Sign in or create an account in a new tab →');link.href='/payment-check/account/';link.target='_blank';link.rel='noopener';status.append(link);}
     } finally { button.disabled = false; }
   });
 }
+
+(async()=>{
+  const params=new URLSearchParams(location.search);
+  const number=params.get('company');
+  if (!number || !PaymentRecords.validCompanyNumber(number)) return;
+  try {
+    const data=await PaymentAPI.request(`public?company=${encodeURIComponent(number)}`);
+    if (!data.reviews.length) return;
+    await chooseCompany({number:number.toUpperCase(),name:data.reviews[0].companyName});
+    if (params.get('report')) $('#response-form').elements['review-reference'].value=params.get('report');
+    if (location.hash==='#respond') $('#respond').scrollIntoView({block:'start'});
+  } catch { /* The ordinary search and error state remain available. */ }
+})();
