@@ -8,9 +8,9 @@
 .payment-check main h1, .payment-check main h2 { font-weight:900; }
 .payment-check a:focus-visible, .payment-check button:focus-visible, .payment-check input:focus-visible, .payment-check select:focus-visible, .payment-check textarea:focus-visible { outline:3px solid var(--red); outline-offset:4px; }
 .pc-hero { background:var(--white); padding:80px 0 64px; text-align:left; border-bottom:1px solid var(--border); }
-.eyebrow { text-transform:uppercase; letter-spacing:.13em; font-weight:700; font-size:11px; color:var(--red); display:block; }
+.eyebrow { text-transform:uppercase; letter-spacing:2px; font-weight:700; font-size:11px; color:var(--red); display:block; }
 .live-dot { display:inline-block; width:7px; height:7px; background:var(--red); border-radius:50%; margin-right:7px; }
-.pc-hero h1 { font-size:clamp(36px,5.2vw,62px); line-height:1.08; letter-spacing:-.055em; margin:24px 0; font-weight:900; }
+.pc-hero h1 { font-size:clamp(34px,5vw,54px); line-height:1.1; letter-spacing:-2px; margin:24px 0; font-weight:900; }
 .pc-hero h1 em { font-style:normal; color:var(--red); }
 .pc-hero p { max-width:570px; margin:0; color:var(--grey); font-size:18px; }
 .search-bar { display:flex; gap:10px; align-items:center; max-width:730px; padding:8px 8px 8px 22px; margin:32px 0 15px; background:#fff; border:1px solid var(--border); border-radius:9px; box-shadow:0 8px 25px #0f172a0a; }
@@ -19,16 +19,16 @@
 .search-bar .btn-primary { white-space:nowrap; padding:15px 23px; }
 .search-notes { display:flex; flex-wrap:wrap; justify-content:flex-start; gap:10px 25px; font-size:11px; color:var(--grey); }
 .search-notes span::before { content:'✓'; margin-right:6px; }
-.intro-section, .submission-section, .profile-section, .results-section { padding-top:58px; padding-bottom:58px; }
+.intro-section, .submission-section, .profile-section, .results-section { padding-top:88px; padding-bottom:88px; }
 .section-heading { display:flex; gap:40px; align-items:end; justify-content:space-between; margin-bottom:28px; }
-.section-heading h2, .form-intro h2, .standards-inner h2, .recovery-banner h2 { font-size:clamp(28px,3vw,38px); letter-spacing:-.04em; line-height:1.16; margin-top:12px; }
+.section-heading h2, .form-intro h2, .standards-inner h2, .recovery-banner h2 { font-size:clamp(26px,3.5vw,36px); letter-spacing:-1px; line-height:1.15; margin-top:12px; }
 .section-heading>p { max-width:380px; font-size:14px; color:var(--grey); }
-.pc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-.pc-card { background:white; border:1px solid var(--border); border-radius:9px; padding:25px; }
+.pc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+.pc-card { background:white; border:1px solid var(--border); border-radius:12px; padding:28px; }
 .step { color:var(--grey); font-size:10px; letter-spacing:.08em; font-weight:700; }
 .card-symbol { color:var(--red); background:var(--red-light); width:43px; height:43px; display:grid; place-items:center; font-size:27px; border-radius:9px; margin:25px 0 19px; }
 .pc-card h3 { font-size:17px; letter-spacing:-.02em; margin-bottom:9px; }
-.pc-card p, .form-intro>p { font-size:14px; color:var(--grey); }
+.pc-card p, .form-intro>p { font-size:16px; line-height:1.8; color:var(--grey); }
 .standards-section { background:var(--black); color:white; padding:50px 0; }
 .standards-inner { display:grid; grid-template-columns:1fr 1.3fr; gap:65px; }
 .payment-check .standards-section h2 { color:var(--white); }
@@ -42,14 +42,14 @@
 .small-note strong { color:var(--ink); }
 .small-note p { margin-top:9px; }
 .small-note a { display:inline-block; margin-top:9px; }
-.pc-form { padding:28px; border:1px solid var(--border); border-radius:10px; background:white; display:grid; gap:18px; }
-.pc-form label { font-size:12px; font-weight:650; display:block; }
-.pc-form input:not([type=checkbox]), .pc-form select, .pc-form textarea { display:block; width:100%; padding:10px 11px; border:1px solid var(--border); border-radius:5px; margin-top:6px; font:inherit; font-weight:400; color:var(--ink); background:#fff; min-height:42px; }
+.pc-form { padding:36px; border:1px solid var(--border); border-radius:16px; background:white; display:grid; gap:18px; }
+.pc-form label { font-size:11px; font-weight:700; display:block; text-transform:uppercase; letter-spacing:.5px; }
+.pc-form input:not([type=checkbox]), .pc-form select, .pc-form textarea { display:block; width:100%; padding:11px 14px; border:1px solid var(--border); border-radius:8px; margin-top:6px; font-family:var(--font); font-size:14px; font-weight:400; text-transform:none; letter-spacing:normal; color:var(--ink); background:#fff; min-height:42px; }
 .pc-form textarea { resize:vertical; }
 .field-pair { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
-.pc-form .checkbox-field { display:flex; gap:10px; align-items:start; font-size:11px; font-weight:400; color:var(--grey); }
+.pc-form .checkbox-field { display:flex; gap:10px; align-items:start; font-size:12px; font-weight:400; color:var(--grey); text-transform:none; letter-spacing:normal; }
 .checkbox-field input { margin-top:3px; flex-shrink:0; width:15px; height:15px; }
-.pc-form .btn-primary { justify-self:start; }
+.pc-form .btn-primary { width:100%; text-align:center; }
 .muted { color:var(--grey); font-weight:400; font-size:12px; }
 .form-status { font-size:13px; }
 .form-status:empty { display:none; }
@@ -95,8 +95,14 @@
   .section-heading>p { max-width:none; }
   .pc-card { padding:22px; }
   .card-symbol { margin:16px 0; }
-  .intro-section, .submission-section, .profile-section, .results-section { padding-top:36px; padding-bottom:36px; }
+  .intro-section, .submission-section, .profile-section, .results-section { padding-top:56px; padding-bottom:56px; }
   .recovery-banner { margin-left:24px; margin-right:24px; padding:25px; }
   .pc-form { padding:20px; }
   .field-pair { grid-template-columns:1fr; }
 }
+
+.payment-check .document-page { max-width:780px; }
+.document-page h1 { font-size:clamp(30px,5vw,44px); line-height:1.15; letter-spacing:-1px; margin:24px 0; }
+.document-page h2 { font-size:24px; letter-spacing:-.5px; margin:32px 0 12px; }
+.document-page p { color:var(--grey); margin:16px 0; line-height:1.8; }
+.payment-check section[id] { scroll-margin-top:82px; }
