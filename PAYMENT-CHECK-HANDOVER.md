@@ -8,7 +8,7 @@ An additive first version for the existing static Netlify website. No new depend
 
 - `/payment-check/` includes UK company search, company payment profiles, review intake, company response/correction requests and the existing free audit CTA.
 - `netlify/functions/company-search.cjs` proxies Companies House search. Set `COMPANIES_HOUSE_API_KEY` in the Netlify site's Functions environment. The API key never enters browser code.
-- Both submission forms are statically declared Netlify Forms. Enable form detection, deploy, then confirm `payment-review` and `payment-response` appear in the Netlify Forms dashboard. Configure email notifications there if wanted.
+- All three submission forms are statically declared Netlify Forms. Enable form detection, deploy, then confirm `payment-review`, `payment-response` and `payment-source` appear in the Netlify Forms dashboard. Configure email notifications there if wanted.
 - Accepted submissions are held in Netlify Forms for manual review. They are not automatically published. Form processing and anti-spam filtering depend on Netlify configuration and plan limits.
 - Local previews explicitly do not send submissions. Registry lookup needs the configured Netlify function; without it the page explains the limit and still searches any existing published records.
 - The public directory starts empty and displays no score for companies without reviews. A directory load failure displays an unavailable state rather than claiming there are no reviews.
@@ -49,7 +49,7 @@ After review, add only the public record below to `payment-check/reviews.json`, 
 }
 ```
 
-Allowed outcomes: `on-time`, `late-paid`, `unpaid`, `disputed`. Omit `paidDate` if unpaid; omit `response` until there is an approved response. Never add email, invoice documents, bank details or internal case information to this public JSON. Payment reviews and debt recovery engagement stay separate; buying recovery services must not be a condition for responding or requesting corrections.
+Allowed outcomes: `late-paid`, `unpaid`, `disputed`. Omit `paidDate` if unpaid; omit `response` until there is an approved response. Never add email, invoice documents, bank details or internal case information to this public JSON. Payment reviews and debt recovery engagement stay separate; buying recovery services must not be a condition for responding or requesting corrections.
 
 ## References
 
@@ -71,3 +71,11 @@ Search-engine indexing requires deployment on an accessible public domain. Compa
 ## Brand alignment
 
 Payment Check now uses the production `/styles.css` tokens and `/components.js` navigation/footer, including the red primary buttons, Inter type, white backgrounds and existing Fynrec identity. The obsolete separate base stylesheet is removed. Company response copy is shortened to a direct heading and one explanatory paragraph. Generated company pages and the company directory use the same shared components.
+
+## Payment-only scope and external sources
+
+Only overdue B2B invoices and late payments are accepted. No on-time rating or broad business score is shown: the directory is a set of payment-issue reports, not a representative payment history.
+
+`payment-source` is a separate private Netlify Forms queue. A submitted external URL is not fetched by the application, published, counted, or treated as permission to republish. Manually inspect whether it concerns overdue B2B payment and matches the registered company. Seek the original reviewer's confirmation, supporting evidence and written publication permission, check source restrictions, then consider a first-hand review through the same moderation workflow. A submitter who found a link cannot authorise copying another person's review. Record permissions and evidence privately; never place source submissions, correspondence or contact details in public JSON. No automated outreach, scraping, accounts or subscriptions are added.
+
+Enable the new `payment-source` form in Netlify after deploying and test receipt. Source-link assessment and original-reviewer contact remain manual operations, not automated verification.

@@ -12,9 +12,24 @@ test('published record search accepts company names and numbers without mixing c
   assert.deepEqual(records.search(data, 'sc123456'), [data[1]]);
   assert.deepEqual(records.search(data, 'missing'), []);
 });
-test('no reviews produce no score; unpaid and disputed reviews are not counted as on time', () => {
-  assert.deepEqual(records.summary([]), { count: 0, onTime: null });
-  assert.deepEqual(records.summary([{ outcome: 'on-time' }, { outcome: 'disputed' }, { outcome: 'unpaid' }]), { count: 3, onTime: 33 });
+test('payment summaries count cases by outcome without a general payment score', () => {
+  assert.deepEqual(records.summary([]), { count: 0, unpaid: 0, settled: 0, disputed: 0 });
+  assert.deepEqual(records.summary([{ outcome: 'late-paid' }, { outcome: 'disputed' }, { outcome: 'unpaid' }]), { count: 3, unpaid: 1, settled: 1, disputed: 1 });
+});
+test('reports must concern an overdue invoice with dates matching the outcome', () => {
+  const base = { outcome: 'unpaid', due: '2026-09-01', paid: '', today: '2026-10-21' };
+  assert.equal(records.paymentError(base), '');
+  assert.equal(records.paymentError({ ...base, outcome: 'late-paid', paid: '2026-09-15' }), '');
+  assert.equal(records.paymentError({ ...base, outcome: 'disputed' }), '');
+  for (const change of [
+    { outcome: 'on-time' }, { due: '2026-10-22' }, { due: '2026-10-21' }, { due: '2026-02-30' },
+    { paid: '2026-09-15' }, { outcome: 'late-paid' }, { outcome: 'late-paid', paid: '2026-09-01' },
+    { outcome: 'late-paid', paid: '2026-10-22' }, { outcome: 'disputed', paid: '2026-09-10' },
+  ]) assert.notEqual(records.paymentError({ ...base, ...change }), '', JSON.stringify(change));
+});
+test('external source links accept public web URLs without executing or fetching them', () => {
+  for (const value of ['https://example.com/payment-review/123', 'http://example.co.uk/review']) assert.equal(records.validSourceUrl(value), true);
+  for (const value of ['javascript:alert(1)', 'data:text/html,review', 'file:///review', 'not a url', 'https://username:password@example.com/review', 'http://127.0.0.1/private', 'http://192.168.1.1/review']) assert.equal(records.validSourceUrl(value), false);
 });
 test('company number validation permits UK prefixes and rejects unsafe identifiers', () => {
   for (const number of ['01234567', 'SC123456', 'ni123456']) assert.equal(records.validCompanyNumber(number), true);
@@ -54,13 +69,20 @@ test('company search fails clearly without an API key and never exposes upstream
 });
 test('forms have matching static detection fields and private moderation destination', () => {
   const html = readFileSync(path.join(root, 'payment-check/index.html'), 'utf8');
-  for (const name of ['payment-review', 'payment-response']) {
+  for (const name of ['payment-review', 'payment-response', 'payment-source']) {
     assert.ok(html.includes(`name="${name}" method="POST"`));
     assert.ok(html.includes(`name="form-name" value="${name}"`));
   }
-  assert.equal((html.match(/data-netlify="true"/g) || []).length, 2);
+  assert.equal((html.match(/data-netlify="true"/g) || []).length, 3);
   const js = readFileSync(path.join(root, 'js/payment-check.js'), 'utf8');
   assert.ok(!js.includes('innerHTML'));
+  assert.ok(html.includes('name="submission-type" value="external-payment-source"'));
+  assert.ok(html.includes('name="source-url" type="url" required'));
+  assert.ok(html.includes('name="payment-only"'));
+  assert.ok(!html.includes('<option value="on-time">'));
+  assert.ok(js.includes("PaymentRecords.validSourceUrl(form.elements['source-url'].value)"));
+  assert.ok(js.includes("$('#source-form')"));
+  assert.ok(!js.includes("fetch(form.elements['source-url']"));
   assert.ok(js.includes('Preview only: nothing has been sent.'));
   assert.ok(js.includes('recordsAvailable = false'));
   assert.ok(readFileSync(path.join(root, 'components.js'), 'utf8').includes('href="/payment-check/"'));
@@ -74,7 +96,7 @@ test('public directory contains only approved public fields and no private conta
     for (const key of ['id', 'companyName', 'reviewerBusiness', 'title', 'experience', 'paymentTerms']) assert.ok(typeof review[key] === 'string' && review[key].trim());
     assert.ok(!ids.has(review.id)); ids.add(review.id);
     assert.ok(records.validCompanyNumber(review.companyNumber));
-    assert.ok(['on-time', 'late-paid', 'unpaid', 'disputed'].includes(review.outcome));
+    assert.ok(['late-paid', 'unpaid', 'disputed'].includes(review.outcome));
     for (const key of ['dueDate', 'publishedAt', ...(review.paidDate ? ['paidDate'] : [])]) assert.match(review[key], /^\d{4}-\d{2}-\d{2}$/);
     if (review.response) {
       assert.deepEqual(Object.keys(review.response).sort(), ['publishedAt', 'text']);

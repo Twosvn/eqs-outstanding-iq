@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Check — Business Payment Reviews | Fynrec</title>
-  <meta name="description" content="Check UK company payment experiences before taking on work. Share a payment review, respond as a business or get help recovering unpaid invoices.">
+  <title>Payment Check — Late & Unpaid Business Invoices | Fynrec</title>
+  <meta name="description" content="Check UK company payment experiences before taking on work. Report late or unpaid business invoices, respond to a payment report or get help with recovery.">
   <link rel="canonical" href="https://fynrec.com/payment-check/">
   <meta property="og:title" content="Fynrec Payment Check">
   <meta property="og:description" content="Know who you’re doing business with. Share and explore business payment experiences.">
@@ -24,9 +24,9 @@
 <div id="site-nav"></div>
 <main id="main">
 <header class="pc-hero"><div class="container">
-  <div class="eyebrow"><span class="live-dot"></span> Business payment experiences, shared</div>
+  <div class="eyebrow"><span class="live-dot"></span> Late payments. Unpaid business invoices.</div>
   <h1>Before you do the work.<br><em>Check how they pay.</em></h1>
-  <p>Good work deserves to be paid. Find a company, explore supplier experiences and go into your next business relationship better informed.</p>
+  <p>Find reports of overdue business invoices, see whether a payment was disputed or resolved, and share your own first-hand experience.</p>
   <form id="company-search" class="search-bar" role="search">
     <label class="sr-only" for="search-query">Company name or Companies House number</label>
     <span class="search-icon" aria-hidden="true">⌕</span>
@@ -44,33 +44,48 @@
   <button class="text-button" id="back-results" type="button">← Back to results</button>
   <div class="profile-header"><div><span class="eyebrow">Company payment record</span><h2 id="profile-name" tabindex="-1"></h2><p id="profile-number"></p><a id="registry-link" target="_blank" rel="noopener noreferrer">View on Companies House ↗</a></div><a class="btn-primary" href="#share" id="review-company">Review this company</a></div>
   <div class="record-summary" id="record-summary"></div>
-  <p class="muted">Reviews describe individual supplier experiences. Company registration status is separate from payment behaviour. This is not a credit score or a guarantee of future payment.</p>
+  <p class="muted">Reviews describe individual supplier experiences. Company registration status is separate from payment behaviour. These reports are not a complete payment history, a credit score or a guarantee of future payment.</p>
   <div id="company-reviews"></div>
   <div class="response-prompt"><div><h3>Is this your business?</h3><p>Add context, report an error or tell us that an invoice has been resolved.</p></div><a href="#respond" id="respond-company">Respond to a review →</a></div>
 </section>
 <section class="container intro-section" id="how-it-works">
-  <div class="section-heading"><div><span class="eyebrow">A clearer picture before you commit</span><h2>Payment habits matter.</h2></div><p>A company’s payment experience is worth sharing—whether they paid promptly or left you chasing.</p></div>
+  <div class="section-heading"><div><span class="eyebrow">A clearer picture before you commit</span><h2>Payment habits matter.</h2></div><p>See what happened when a business invoice went overdue, including whether it has since been paid.</p></div>
   <div class="pc-grid">
     <article class="pc-card"><span class="step">01 / CHECK</span><div class="card-symbol" aria-hidden="true">⌕</div><h3>Find the company</h3><p>Search by registered name or company number to make sure you’re looking at the right business.</p></article>
-    <article class="pc-card"><span class="step">02 / UNDERSTAND</span><div class="card-symbol" aria-hidden="true">≡</div><h3>Look beyond a star rating</h3><p>See agreed payment terms, whether payment arrived on time and whether an invoice was disputed.</p></article>
+    <article class="pc-card"><span class="step">02 / UNDERSTAND</span><div class="card-symbol" aria-hidden="true">≡</div><h3>Look beyond a star rating</h3><p>See agreed payment terms, how late payment was and whether an overdue invoice was disputed or settled.</p></article>
     <article class="pc-card"><span class="step">03 / SHARE</span><div class="card-symbol" aria-hidden="true">↗</div><h3>Help the next supplier</h3><p>Share a first-hand experience. Submissions are reviewed before publication, with a route for businesses to respond.</p></article>
   </div>
 </section>
 <section class="standards-section"><div class="container standards-inner"><div><span class="eyebrow">Useful information. Fair context.</span><h2>Facts first.<br>Room for both sides.</h2></div><div class="standards-list"><p><strong>Real business experiences</strong>We ask reviewers for company details and information to support their account before publication.</p><p><strong>Disputes stay in context</strong>A disputed invoice is labelled as disputed. An unresolved balance does not, by itself, establish wrongdoing.</p><p><strong>Updates matter</strong>Businesses can respond and suppliers can report a resolution. Payment reviews and paid recovery services are handled separately.</p></div></div></section>
 <section class="container submission-section" id="share" aria-labelledby="share-heading">
-  <div class="form-intro"><span class="eyebrow">Add your experience</span><h2 id="share-heading">Paid on time?<br>Still chasing?</h2><p>Tell us what happened. Keep it specific to a business invoice and your own experience.</p><div class="small-note"><strong>Before you submit</strong><p>Use company names, not individual names. Don’t include bank details, home addresses or confidential invoice contents. We’ll contact you privately if supporting information is needed.</p><p>Your email stays out of published reviews. Your business name and payment experience may be published after review.</p><a href="/payment-check/privacy/">How we use submissions →</a></div></div>
+  <div class="form-intro"><span class="eyebrow">Add your experience</span><h2 id="share-heading">Still waiting<br>to get paid?</h2><p>Report an overdue business invoice or a payment that arrived late. Keep it specific to money owed to your business.</p><div class="small-note"><strong>Before you submit</strong><p>Use company names, not individual names. Don’t include bank details, home addresses or confidential invoice contents. We’ll contact you privately if supporting information is needed.</p><p>Your email stays out of published reviews. Your business name and payment experience may be published after review.</p><a href="/payment-check/privacy/">How we use submissions →</a><p>Found a payment complaint elsewhere? <a href="#source">Submit its original link</a>.</p></div></div>
   <form name="payment-review" method="POST" action="/payment-check/thanks/" data-netlify="true" netlify-honeypot="bot-field" class="pc-form" id="review-form">
     <input type="hidden" name="form-name" value="payment-review"><p hidden><label>Leave empty <input name="bot-field"></label></p>
     <div class="field-pair"><label>Company you’re reviewing<input name="company-name" autocomplete="organization" required maxlength="160"></label><label>Companies House number<input name="company-number" required pattern="[A-Za-z0-9]{8}" maxlength="8" placeholder="e.g. 01234567" title="Enter the 8-character Companies House number"></label></div>
     <div class="field-pair"><label>Your business name<input name="reviewer-business" required maxlength="160"></label><label>Your work email <span class="muted">(not published)</span><input name="email" type="email" autocomplete="email" required maxlength="254"></label></div>
-    <div class="field-pair"><label>Agreed payment terms<select name="payment-terms" required><option value="">Choose terms</option><option>On receipt</option><option>7 days</option><option>14 days</option><option>30 days</option><option>60 days</option><option>90 days</option><option>Other</option></select></label><label>What happened?<select name="outcome" required><option value="">Choose an outcome</option><option value="on-time">Paid on time</option><option value="late-paid">Paid late, now settled</option><option value="unpaid">Still unpaid</option><option value="disputed">Invoice disputed</option></select></label></div>
+    <div class="field-pair"><label>Agreed payment terms<select name="payment-terms" required><option value="">Choose terms</option><option>On receipt</option><option>7 days</option><option>14 days</option><option>30 days</option><option>60 days</option><option>90 days</option><option>Other</option></select></label><label>What happened?<select name="outcome" required><option value="">Choose an outcome</option><option value="late-paid">Paid late, now settled</option><option value="unpaid">Still unpaid</option><option value="disputed">Overdue invoice disputed</option></select></label></div>
     <div class="field-pair"><label>Invoice due date<input name="due-date" type="date" required></label><label>Payment date <span class="muted">(if paid)</span><input name="paid-date" type="date"></label></div>
     <label>Review headline<input name="title" required minlength="5" maxlength="120" placeholder="A short, factual summary"></label>
     <label>Your payment experience<textarea name="experience" rows="5" required minlength="30" maxlength="2000" placeholder="What terms were agreed? When was payment due? What happened when you followed up?"></textarea></label>
-    <label class="checkbox-field"><input type="checkbox" name="first-hand" value="confirmed" required><span>This is my first-hand business experience, the information is accurate to the best of my knowledge, and I can provide supporting information.</span></label>
+    <label class="checkbox-field"><input type="checkbox" name="first-hand" value="confirmed" required><span>This concerns an overdue business-to-business invoice, is my first-hand experience, the information is accurate to the best of my knowledge, and I can provide supporting information.</span></label>
     <label class="checkbox-field"><input type="checkbox" name="publication-consent" value="confirmed" required><span>I’ve read <a href="/payment-check/privacy/">how submissions are used</a> and agree to my business name and review being considered for publication. I understand submission does not guarantee publication.</span></label>
     <button class="btn-primary" type="submit">Submit for review <span aria-hidden="true">↗</span></button>
     <p class="form-status" role="status"></p><p class="muted form-footnote">Reviews are never published automatically. Submitting a review does not instruct Fynrec to collect a debt.</p>
+  </form>
+</section>
+<section class="container submission-section response-section" id="source" aria-labelledby="source-heading">
+  <div class="form-intro"><span class="eyebrow">An existing payment complaint</span><h2 id="source-heading">Seen a report<br>on another site?</h2><p>Send us the original link if it concerns a business paying another business late or leaving an invoice unpaid.</p><p>We’ll review the source and seek the original reviewer’s confirmation, supporting evidence and permission before considering a Fynrec review. A link alone is not a verified payment report.</p><p class="muted">Links stay in our private review queue. They do not appear on company profiles or count towards payment statistics.</p></div>
+  <form name="payment-source" method="POST" action="/payment-check/thanks/" data-netlify="true" netlify-honeypot="bot-field" class="pc-form" id="source-form">
+    <input type="hidden" name="form-name" value="payment-source"><input type="hidden" name="submission-type" value="external-payment-source"><p hidden><label>Leave empty <input name="bot-field"></label></p>
+    <label>Business the complaint concerns<input name="company-name" required maxlength="160"></label>
+    <label>Companies House number<input name="company-number" required pattern="[A-Za-z0-9]{8}" maxlength="8"></label>
+    <label>Original review or complaint link<input name="source-url" type="url" required maxlength="2000" placeholder="https://…"></label>
+    <label>Your connection to this report<select name="source-relationship" required><option value="">Choose an option</option><option value="original-reviewer">I wrote the original review</option><option value="found-online">I found the review online</option></select></label>
+    <label>Your work email <span class="muted">(not published)</span><input name="email" type="email" autocomplete="email" required maxlength="254"></label>
+    <label>Why is this about an overdue business invoice?<textarea name="payment-context" rows="3" required minlength="20" maxlength="1000" placeholder="Briefly describe the payment issue. Don’t paste the original review or include private details."></textarea></label>
+    <label class="checkbox-field"><input type="checkbox" name="payment-only" value="confirmed" required><span>The source concerns late payment or an unpaid business-to-business invoice, rather than a consumer purchase or general service complaint.</span></label>
+    <label class="checkbox-field"><input type="checkbox" name="private-review" value="confirmed" required><span>I’ve read <a href="/payment-check/privacy/">how submissions are used</a>. I understand this sends a link for private assessment and does not authorise republication of someone else’s review.</span></label>
+    <button type="submit" class="btn-primary">Send link for assessment ↗</button><p class="form-status" role="status"></p>
   </form>
 </section>
 <section class="container submission-section response-section" id="respond" aria-labelledby="respond-heading">
