@@ -93,8 +93,8 @@ $('#company-search').addEventListener('submit', async event => {
   for (const record of PaymentRecords.search(published, q)) {
     if (!companies.some(company => company.number === record.companyNumber)) companies.push({ name: record.companyName, number: record.companyNumber });
   }
-  if (!recordsAvailable) warning += ' Published payment records could not be loaded.';
-  $('#search-status').textContent = `${warning ? `${warning} ` : ''}${companies.length ? `${companies.length} matching ${companies.length === 1 ? 'company' : 'companies'}.` : warning ? 'You can still submit a review below using a company’s registered name and number.' : 'No matching companies found. Check the spelling or try the company number.'}`;
+  if (!recordsAvailable) warning += `${warning ? ' ' : ''}Published payment records could not be loaded.`;
+  $('#search-status').textContent = `${warning ? `${warning} ` : ''}${companies.length ? `${companies.length} matching ${companies.length === 1 ? 'company' : 'companies'}.` : warning ? (recordsAvailable ? 'You can submit a payment report below using the company’s registered name and number.' : 'Please try again later, or submit a payment report below.') : 'No matching companies found. Check the spelling or try the company number.'}`;
   for (const company of companies) {
     const button = textNode('button', '', 'company-result');
     button.type = 'button';
