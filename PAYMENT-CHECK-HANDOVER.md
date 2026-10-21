@@ -67,3 +67,7 @@ Search-engine indexing requires deployment on an accessible public domain. Compa
 ## Verification in this session
 
 `npm run build` passed with 8 tests. Browser script and preview server syntax checks passed. Browser QA was blocked by session permissions, and the local server could not bind a port (EPERM). Live Companies House and Netlify Forms delivery were not tested. No real submissions or published reviews were created.
+
+## Brand alignment
+
+Payment Check now uses the production `/styles.css` tokens and `/components.js` navigation/footer, including the red primary buttons, Inter type, white backgrounds and existing Fynrec identity. The obsolete separate base stylesheet is removed. Company response copy is shortened to a direct heading and one explanatory paragraph. Generated company pages and the company directory use the same shared components.

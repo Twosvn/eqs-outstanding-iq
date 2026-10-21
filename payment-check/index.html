@@ -10,17 +10,18 @@
   <meta property="og:description" content="Know who you’re doing business with. Share and explore business payment experiences.">
   <meta property="og:url" content="https://fynrec.com/payment-check/">
   <meta property="og:type" content="website">
-  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/components.js" defer></script>
   <link rel="stylesheet" href="/css/payment-check.css">
   <script src="/js/payment-records.js" defer></script>
   <script src="/js/payment-check.js" defer></script>
 </head>
 <body class="payment-check">
 <a class="skip-link" href="#main">Skip to content</a>
-<nav class="site-nav" aria-label="Main navigation"><div class="nav-inner">
-  <a href="/" class="nav-logo">Fyn<span>rec</span><span class="product-name"> / Payment Check</span></a>
-  <ul class="nav-links"><li><a href="#how-it-works">How it works</a></li><li><a href="/#audit">Recover a debt</a></li><li><a href="#share" class="nav-cta">Write a review</a></li></ul>
-</div></nav>
+<div id="site-nav"></div>
 <main id="main">
 <header class="pc-hero"><div class="container">
   <div class="eyebrow"><span class="live-dot"></span> Business payment experiences, shared</div>
@@ -73,7 +74,7 @@
   </form>
 </section>
 <section class="container submission-section response-section" id="respond" aria-labelledby="respond-heading">
-  <div class="form-intro"><span class="eyebrow">Give the full picture</span><h2 id="respond-heading">Your business.<br>Your response.</h2><p>Respond, request a correction or update a resolved invoice. We’ll check your authority to represent the company before publishing a response.</p><p class="muted">Responding and requesting corrections are free. You do not need to buy debt recovery services.</p></div>
+  <div class="form-intro"><span class="eyebrow">Company responses</span><h2 id="respond-heading">Respond to a review.</h2><p>Add a response, correct a detail or let us know an invoice has been paid. We’ll confirm you represent the business before publishing.</p></div>
   <form name="payment-response" method="POST" action="/payment-check/thanks/" data-netlify="true" netlify-honeypot="bot-field" class="pc-form" id="response-form">
     <input type="hidden" name="form-name" value="payment-response"><p hidden><label>Leave empty <input name="bot-field"></label></p>
     <label>Company name<input name="company-name" required maxlength="160"></label>
@@ -88,7 +89,7 @@
 </section>
 <section class="recovery-banner container"><div><span class="eyebrow">Already waiting for payment?</span><h2>You’ve done the work.<br>Let us do the chasing.</h2><p>Fynrec’s B2B debt recovery service works on a no win, no fee basis. Start with a free debt audit.</p></div><a href="/#audit" class="btn-primary">Get help recovering a debt ↗</a></section>
 </main>
-<footer class="pc-footer container"><a href="/" class="pc-footer-logo">Fynrec</a><p>Payment Check by Fynrec, a trading name of Equisettle Ltd.</p><a href="/payment-check/privacy/">Submissions & privacy</a><a href="#respond">Respond or report an issue</a></footer>
+<div id="site-footer"></div>
 <noscript><p class="container">JavaScript is required for company search. You can still use the review and response forms above.</p></noscript>
 </body>
 </html>
