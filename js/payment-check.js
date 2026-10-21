@@ -5,7 +5,7 @@ let published = [];
 let recordsAvailable = true;
 let latestSearch = 0;
 let recordsReady;
-const outcomes = { 'on-time': 'Paid on time', 'late-paid': 'Paid late · settled', unpaid: 'Still unpaid at review date', disputed: 'Invoice disputed' };
+const outcomes = { 'late-paid': 'Paid late · settled', unpaid: 'Still unpaid at review date', disputed: 'Invoice disputed' };
 const textNode = (tag, value, className) => {
   const element = document.createElement(tag);
   element.textContent = value;
@@ -25,7 +25,7 @@ function chooseCompany(company) {
   $('#profile-name').textContent = company.name;
   $('#profile-number').textContent = `Company no. ${company.number}${company.status ? ` · Registration status: ${company.status}` : ''}`;
   $('#registry-link').href = `https://find-and-update.company-information.service.gov.uk/company/${encodeURIComponent(company.number)}`;
-  for (const form of [$('#review-form'), $('#response-form')]) {
+  for (const form of [$('#review-form'), $('#response-form'), $('#source-form')]) {
     form.elements['company-name'].value = company.name;
     form.elements['company-number'].value = company.number;
   }
@@ -33,7 +33,7 @@ function chooseCompany(company) {
   const reviews = published.filter(record => record.companyNumber === company.number);
   const summary = PaymentRecords.summary(reviews);
   $('#record-summary').replaceChildren();
-  for (const [value, label] of [[recordsAvailable ? summary.count : 'Unavailable', 'published experiences'], [summary.onTime === null ? '—' : `${summary.onTime}%`, 'reported paid on time']]) {
+  for (const [value, label] of [[recordsAvailable ? summary.count : 'Unavailable', 'published payment reports'], [recordsAvailable ? summary.unpaid : 'Unavailable', 'reported unpaid'], [recordsAvailable ? summary.settled : 'Unavailable', 'paid late · settled'], [recordsAvailable ? summary.disputed : 'Unavailable', 'reported disputed']]) {
     const stat = textNode('div', '', 'summary-stat');
     stat.append(textNode('strong', value), textNode('span', label, 'muted'));
     $('#record-summary').append(stat);
@@ -107,21 +107,19 @@ $('#company-search').addEventListener('submit', async event => {
 $('#search-query').addEventListener('input', event => event.target.setCustomValidity(''));
 $('#back-results').addEventListener('click', () => { $('#company-profile').hidden = true; $('#search-results').hidden = false; $('#search-query').focus(); });
 
-for (const form of [$('#review-form'), $('#response-form')]) {
+for (const form of [$('#review-form'), $('#response-form'), $('#source-form')]) {
   form.elements['company-number'].addEventListener('input', event => { event.target.value = event.target.value.toUpperCase(); });
   form.addEventListener('submit', async event => {
     event.preventDefault();
     if (!form.reportValidity()) return;
     const status = form.querySelector('.form-status');
     if (form.id === 'review-form') {
-      const outcome = form.elements.outcome.value;
-      const due = form.elements['due-date'].value;
-      const paid = form.elements['paid-date'].value;
-      const today = new Date().toLocaleDateString('en-CA');
-      if (due > today || paid > today || ((outcome === 'on-time' || outcome === 'late-paid') && !paid) || (outcome === 'on-time' && paid > due) || (outcome === 'late-paid' && paid <= due) || (outcome === 'unpaid' && paid)) {
-        status.textContent = 'Please check the invoice dates and outcome. Paid invoices need a payment date; unpaid invoices must not have one. Dates must not be in the future.';
-        return;
-      }
+      const error = PaymentRecords.paymentError({ outcome: form.elements.outcome.value, due: form.elements['due-date'].value, paid: form.elements['paid-date'].value, today: new Date().toLocaleDateString('en-CA') });
+      if (error) { status.textContent = error; return; }
+    }
+    if (form.id === 'source-form' && !PaymentRecords.validSourceUrl(form.elements['source-url'].value)) {
+      status.textContent = 'Enter a public http or https link to the original payment complaint, without login details.';
+      return;
     }
     if (['localhost', '127.0.0.1', ''].includes(location.hostname)) {
       status.textContent = 'Preview only: nothing has been sent. Review submission becomes available on the configured Netlify site.';
@@ -133,7 +131,7 @@ for (const form of [$('#review-form'), $('#response-form')]) {
     try {
       const response = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
       if (!response.ok) throw new Error('Submission failed');
-      status.textContent = 'Your submission has been sent for review. It is not public. Please check your email for any follow-up from Fynrec.';
+      status.textContent = form.id === 'source-form' ? 'Your link has been sent for private assessment. It is not a published or verified payment report. We may contact you for more information.' : 'Your submission has been sent for review. It is not public. Please check your email for any follow-up from Fynrec.';
       form.reset();
     } catch {
       status.textContent = 'We could not confirm your submission. Your entries are still here; please try again shortly.';
