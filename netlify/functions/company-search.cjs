@@ -15,7 +15,13 @@ exports.handler = async (event) => {
       headers: { Authorization: `Basic ${Buffer.from(`${key}:`).toString('base64')}` },
       signal: AbortSignal.timeout(8000),
     });
-    if (!response.ok) return json(response.status === 429 ? 429 : 502, { error: 'Registered company search is busy. Please try again shortly.' });
+    if (!response.ok) {
+      // Log status only: never log keys, authorisation headers or upstream bodies.
+      console.error('Companies House search failed', { upstreamStatus: response.status });
+      if (response.status === 401 || response.status === 403) return json(503, { code: 'REGISTRY_AUTH_FAILED', error: 'The company search connection needs attention. Please try again later.' });
+      if (response.status === 429) return json(429, { code: 'REGISTRY_RATE_LIMITED', error: 'Company search has reached its request limit. Please wait a few minutes and try again.' });
+      return json(502, { code: 'REGISTRY_UPSTREAM_ERROR', error: 'Companies House search is temporarily unavailable. Please try again later.' });
+    }
     const data = await response.json();
     const companies = (data.items || []).map(item => ({
       name: item.title,

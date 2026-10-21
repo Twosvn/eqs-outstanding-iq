@@ -55,8 +55,19 @@ test('company search fails clearly without an API key and never exposes upstream
     assert.equal(result.statusCode, 200);
     assert.deepEqual(JSON.parse(result.body).companies, [{ name: 'Example Limited', number: '01234567', status: 'active', location: 'London, SE1 1AA' }]);
     assert.ok(!result.body.includes('test-secret'));
-    global.fetch = async () => ({ ok: false, status: 429 });
-    assert.equal((await handler({ httpMethod: 'GET', queryStringParameters: { q: 'supplier' } })).statusCode, 429);
+    const oldError = console.error;
+    const logs = [];
+    console.error = (...args) => logs.push(args);
+    try {
+      for (const [upstream, status, code] of [[401, 503, 'REGISTRY_AUTH_FAILED'], [403, 503, 'REGISTRY_AUTH_FAILED'], [429, 429, 'REGISTRY_RATE_LIMITED'], [500, 502, 'REGISTRY_UPSTREAM_ERROR']]) {
+        global.fetch = async () => ({ ok: false, status: upstream });
+        const failure = await handler({ httpMethod: 'GET', queryStringParameters: { q: 'supplier' } });
+        assert.equal(failure.statusCode, status);
+        assert.equal(JSON.parse(failure.body).code, code);
+      }
+      assert.deepEqual(logs[0], ['Companies House search failed', { upstreamStatus: 401 }]);
+      assert.ok(!JSON.stringify(logs).includes('test-secret'));
+    } finally { console.error = oldError; }
     global.fetch = async () => { throw new Error('secret upstream details'); };
     const failure = await handler({ httpMethod: 'GET', queryStringParameters: { q: 'supplier' } });
     assert.equal(failure.statusCode, 502);
