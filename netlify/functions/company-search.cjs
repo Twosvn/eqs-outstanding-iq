@@ -8,8 +8,8 @@ exports.handler = async (event) => {
   if (event.httpMethod !== 'GET') return { ...json(405, { error: 'Method not allowed.' }), headers: { ...json(405, {}).headers, Allow: 'GET' } };
   const q = (event.queryStringParameters?.q || '').trim();
   if (q.length < 2 || q.length > 100 || /[\u0000-\u001f]/.test(q)) return json(400, { error: 'Enter between 2 and 100 characters.' });
-  const key = process.env.COMPANIES_HOUSE_API_KEY;
-  if (!key) return json(503, { error: 'Registered company search is temporarily unavailable. You can still search published payment records or submit a review using the company number.' });
+  const key = process.env.COMPANIES_HOUSE_API_KEY?.trim();
+  if (!key) return json(503, { error: 'Registered company search is temporarily unavailable.' });
   try {
     const response = await fetch(`https://api.company-information.service.gov.uk/search/companies?q=${encodeURIComponent(q)}&items_per_page=10`, {
       headers: { Authorization: `Basic ${Buffer.from(`${key}:`).toString('base64')}` },
