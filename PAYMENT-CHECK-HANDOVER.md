@@ -1,83 +1,97 @@
-# Fynrec Payment Check
+# Fynrec Payment Check backend
 
-Branch: `feat/fynrec-payment-check`.
+Branch: `feat/fynrec-payment-check` in `Twosvn/eqs-outstanding-iq`.
 
-An additive first version for the existing static Netlify website. No new dependencies. No customer cases, Equisettle records or sample reviews have been imported.
+## Implemented
 
-## What works
+- Supabase Postgres for private submissions and an approved public review projection.
+- Supabase Auth email/password sign-up, email confirmation, sign-in, password recovery codes, session refresh and sign-out.
+- Secure HttpOnly session cookies. Passwords/tokens are never stored in browser local storage or exposed through the public API.
+- Signed-in submission of first-hand payment reports, external source leads and company responses/corrections.
+- Private PDF/PNG/JPEG evidence, up to 3 MB per report. Evidence downloads check account ownership or administrator status.
+- Account dashboard for submission status and withdrawals.
+- Administrator moderation with identity/evidence/permission confirmations, optimistic concurrency, resolution updates and a private moderation event log.
+- External source links are never automatically fetched, scraped or turned into public reviews.
+- Live company/report pages, metadata, native sharing/copy-link controls and sitemap. Only approved reports are public; withdrawal removes the report from Fynrec's public endpoints immediately. External shares/search caches are outside Fynrec's control.
+- Server validation, same-origin mutation checks, private table access restrictions, public field allowlisting and idempotent submissions. A database trigger serialises per-account insertion and limits submissions to 20 per 24 hours.
+- Existing company search still uses the Companies House key. Existing Fynrec marketing pages and Formspree audit form are preserved.
 
-- `/payment-check/` includes UK company search, company payment profiles, review intake, company response/correction requests and the existing free audit CTA.
-- `netlify/functions/company-search.cjs` proxies Companies House search. Set `COMPANIES_HOUSE_API_KEY` in the Netlify site's Functions environment. The API key never enters browser code.
-- All three submission forms are statically declared Netlify Forms. Enable form detection, deploy, then confirm `payment-review`, `payment-response` and `payment-source` appear in the Netlify Forms dashboard. Configure email notifications there if wanted.
-- Accepted submissions are held in Netlify Forms for manual review. They are not automatically published. Form processing and anti-spam filtering depend on Netlify configuration and plan limits.
-- Local previews explicitly do not send submissions. Registry lookup needs the configured Netlify function; without it the page explains the limit and still searches any existing published records.
-- The public directory starts empty and displays no score for companies without reviews. A directory load failure displays an unavailable state rather than claiming there are no reviews.
+No Netlify Forms, manual public JSON publishing, paid subscriptions or new npm dependencies are used for Payment Check.
 
-## Deployment
+## Live setup — required before launch
 
-This branch is based on the existing `Twosvn/eqs-outstanding-iq` Git history, cloned from the clean local checkout at `/Users/dos/eqs-production/outstandiq-website`. Its origin is `git@github.com:Twosvn/eqs-outstanding-iq.git`. The current homepage, shared components, location/sector pages and Netlify redirects are retained. Payment Check is linked through the existing shared navigation.
+The project has NOT been provisioned, migrated or connected in this session. Source and tests are complete locally; live email, database and storage behaviour must be verified after setup.
 
-1. Add `payment-check/`, `js/payment-records.js`, `js/payment-check.js`, `css/payment-check.css`, `netlify/functions/company-search.cjs` and `tests/payment-check.test.cjs` to the current Netlify source.
-2. Merge `scripts/build.cjs`, `package.json` and the Netlify build settings. The build runs tests, generates the public `dist/` directory, creates indexable company pages for published reviews and adds their URLs to the sitemap. `netlify.toml` publishes only `dist/`, with server functions in `netlify/functions`. This keeps internal source notes, tests and function code out of static hosting. Preserve current site settings.
-3. Add the Payment Check navigation link and sitemap URL to the current site. Scope asset cache overrides to the two new JavaScript files and payment-check CSS.
-4. Set the Companies House key server-side. Enable Forms and confirm the published submission/privacy notice fits your handling of reviews, before accepting real submissions.
-5. Run `npm run build` and `node --check js/payment-check.js`. Run `npm run preview` and open http://127.0.0.1:4173/payment-check/ for local review. Deploy to a Netlify draft first. Confirm a live registry search, a review submission, a response submission, dashboard receipt and failure handling. This session did not perform those live integration checks.
+1. Create a **Supabase Free** project dedicated to Fynrec. Select a suitable region. Keep the project on Free; no paid add-ons are required by this code.
+2. In Supabase's SQL editor run `supabase/migrations/202610210001_payment_check.sql` once. It creates private submissions/admin tables, the approved public view, private evidence bucket, insertion limit and moderation history. This file is a first migration, not an idempotent reset script. Do not rerun it over an existing installation.
+3. In Netlify, add these **Functions-scoped** variables for the deployment being tested:
 
-## Moderation and publication
+   - `SUPABASE_URL`: the project URL.
+   - `SUPABASE_PUBLISHABLE_KEY`: the `sb_publishable_...` key.
+   - `SUPABASE_SECRET_KEY`: the `sb_secret_...` server key. Never paste it into public files, browser code, Git, screenshots or chat.
+   - `SITE_URL`: `https://fynrec.com` for production. For an HTTPS deploy preview, set this to that preview's exact origin in its context.
+   - `COMPANIES_HOUSE_API_KEY`: existing live REST key for company lookup.
 
-Use Netlify Forms to contact the reviewer privately and check the first-hand transaction, correct registered company and dates. Verify a responding representative's authority. Keep supporting documents out of the public asset folder. Do not use Equisettle case data as reviews without a separate authorised process.
+   Legacy `SUPABASE_ANON_KEY` and `SUPABASE_SERVICE_ROLE_KEY` values are also supported, but the new keys above are recommended. New Supabase keys are sent in `apikey`, never as a bearer JWT. Only signed-in user tokens go in `Authorization: Bearer`.
+4. In Supabase Auth enable email/password sign-up and **email confirmations**. Set the Site URL to `https://fynrec.com` and add `https://fynrec.com/payment-check/account/` to Redirect URLs. Keep production and preview redirect allowlists explicit.
+5. Configure **custom SMTP** for public registration and reset emails. The built-in Supabase sender is restricted to project-team addresses. A free-tier sender such as Resend can be used with a verified sending domain. Keep paid overages disabled and use the sender's Free plan. SMTP credentials belong in Supabase Auth settings, not the site repository.
+6. In the **password recovery email template**, include `{{ .Token }}` and direct users to `/payment-check/account/` to enter that code. The account UI verifies a code then offers a new password; it intentionally does not turn URL fragment tokens into sessions. The ordinary email confirmation template can retain its confirmation link; users sign in after confirming.
+7. Deploy the branch. Sign up using your admin email and confirm it. Then bootstrap admin access in Supabase SQL using your real account email:
 
-After review, add only the public record below to `payment-check/reviews.json`, run the tests and redeploy. Update a record when a resolution is checked. This is a manual directory, not an automated account/verification or moderation dashboard. Treat the browser form's validation as convenience: manually check all submitted fields before publication.
+   ```sql
+   insert into public.payment_admins(user_id)
+   select id from auth.users where lower(email)=lower('YOUR_ADMIN_EMAIL')
+   on conflict do nothing;
+   ```
 
-```json
-{
-  "id": "PC-UNIQUE-REFERENCE",
-  "companyName": "CONFIRMED REGISTERED NAME",
-  "companyNumber": "01234567",
-  "reviewerBusiness": "CONFIRMED REVIEWER BUSINESS",
-  "title": "Reviewed factual headline",
-  "experience": "Reviewed payment account without private personal details",
-  "outcome": "late-paid",
-  "paymentTerms": "30 days",
-  "dueDate": "2026-09-01",
-  "paidDate": "2026-09-15",
-  "publishedAt": "2026-10-21",
-  "response": {
-    "text": "Optional response from a verified company representative",
-    "publishedAt": "2026-10-21"
-  }
-}
-```
+   This is a SQL-only privilege grant. Neither signing up nor changing user metadata grants moderation access.
+8. Open `/payment-check/account/` and `/payment-check/admin/`. Verify the complete acceptance checklist below before inviting users.
 
-Allowed outcomes: `late-paid`, `unpaid`, `disputed`. Omit `paidDate` if unpaid; omit `response` until there is an approved response. Never add email, invoice documents, bank details or internal case information to this public JSON. Payment reviews and debt recovery engagement stay separate; buying recovery services must not be a condition for responding or requesting corrections.
+The original local checkout remains untouched. The working branch shares the existing repository history. Use `git push -u origin feat/fynrec-payment-check`; no force push is needed. GitHub network access from this session has previously failed, so any push must be confirmed separately.
+
+## Launch checks
+
+- `npm run build` and `npm run check:backend` with configured environment.
+- Real email confirmation, sign-in and recovery code delivery through custom SMTP.
+- Create a report with a redacted evidence file. Confirm it is saved once after retries and stays private.
+- Another ordinary account cannot download its evidence, view its private submission or access moderation.
+- Approve the report as an admin. Check the company/report page, share link, metadata and sitemap.
+- Submit and approve a matching company response. Reject a response for a different registered company.
+- Apply a checked payment resolution. Withdraw a report and confirm its URL returns unavailable and it disappears from the public API/sitemap.
+- Source links remain private and cannot be directly approved as reviews.
+- Check the Supabase public API with a publishable key: private tables must be denied, the public view must contain only approved public fields and the storage bucket must not be public.
+- Check mobile/desktop layouts and form error messages on the HTTPS deployment.
+- Review the published account terms/privacy notice for your actual operator, retention practice and contact details before public launch.
+
+## Cost controls
+
+Checked against official pricing on 21 October 2026:
+
+- Supabase Free: 500 MB database, 1 GB file storage, 50,000 monthly active users, 5 GB egress; free projects may pause after one week of inactivity. This is a starting allowance, not unlimited free hosting.
+- Evidence is limited to one file up to 3 MB per first-hand report. Only authorised downloads proxy the private file. Do not add public evidence links or unlimited uploads.
+- Keep the existing Netlify plan; Functions, bandwidth and hosting remain subject to that plan's usage limits.
+- The built-in Supabase email sender is for testing/team recipients. Configure custom SMTP before public registrations. Resend advertises a Free tier with a daily limit of 100 messages; respect its current monthly quota and domain requirements too. Do not enable paid overages without an explicit decision.
+- No payment processing, account subscriptions, scheduled keep-alive jobs or paid database features are required.
+
+## Data operations
+
+Reports, responses and source leads are stored in `payment_submissions`. Evidence is in the private `payment-evidence` bucket. Only `payment_public_reviews` is granted public read access. Moderation confirmations and actor IDs stay private; status/outcome changes are logged in `payment_moderation_events`.
+
+Admin notes in this version are explicitly **notes to the submitter**, and appear in their account. Do not put internal confidential notes there. Evidence files are forced downloads, not rendered inline. No malware scanning service is integrated; review downloaded attachments with appropriate local precautions.
+
+Account withdrawals remove public visibility but retain private records. Account/data deletion and storage-retention housekeeping are handled by the operator through Supabase; no automatic retention policy is claimed. Free plan backup/restore capabilities must be checked before storing irreplaceable evidence. The old `reviews.json` was empty and was removed; no production data migration was performed.
+
+## Validation performed here
+
+The automated suite uses mocked Supabase HTTP responses and tests server-side authentication/authorisation, validation, private evidence access, CSRF rejection, duplicate handling, moderation, responses, resolution updates, withdrawal, public rendering and key-header handling. The build excludes server files, migrations, tests and credentials from public hosting.
+
+The live migration was not executed, SMTP delivery and live Supabase APIs were not tested, and browser QA could not be run in this session. `npm run check:backend` currently reports missing configuration until a real project is connected. Those are deployment requirements, not passing integration checks.
 
 ## References
 
-- https://docs.netlify.com/manage/forms/setup/
-- https://docs.netlify.com/manage/forms/submissions/
-- https://developer-specs.company-information.service.gov.uk/companies-house-public-data-api/reference/search/search-companies
-- https://developer-specs.company-information.service.gov.uk/guides/authorisation
-
-## Git handoff
-
-The branch is `feat/fynrec-payment-check`. Run `git push -u origin feat/fynrec-payment-check` from this repository. It shares existing repository history; no force push is required. The live site is not changed by the local commit.
-
-Search-engine indexing requires deployment on an accessible public domain. Company pages are generated only from approved public records; no empty fabricated business profiles or review data are seeded. Registry search needs `COMPANIES_HOUSE_API_KEY`; the published review directory search itself does not.
-
-## Verification in this session
-
-`npm run build` passed with 8 tests. Browser script and preview server syntax checks passed. Browser QA was blocked by session permissions, and the local server could not bind a port (EPERM). Live Companies House and Netlify Forms delivery were not tested. No real submissions or published reviews were created.
-
-## Brand alignment
-
-Payment Check now uses the production `/styles.css` tokens and `/components.js` navigation/footer, including the red primary buttons, Inter type, white backgrounds and existing Fynrec identity. The obsolete separate base stylesheet is removed. Company response copy is shortened to a direct heading and one explanatory paragraph. Generated company pages and the company directory use the same shared components.
-
-## Payment-only scope and external sources
-
-Only overdue B2B invoices and late payments are accepted. No on-time rating or broad business score is shown: the directory is a set of payment-issue reports, not a representative payment history.
-
-`payment-source` is a separate private Netlify Forms queue. A submitted external URL is not fetched by the application, published, counted, or treated as permission to republish. Manually inspect whether it concerns overdue B2B payment and matches the registered company. Seek the original reviewer's confirmation, supporting evidence and written publication permission, check source restrictions, then consider a first-hand review through the same moderation workflow. A submitter who found a link cannot authorise copying another person's review. Record permissions and evidence privately; never place source submissions, correspondence or contact details in public JSON. No automated outreach, scraping, accounts or subscriptions are added.
-
-Enable the new `payment-source` form in Netlify after deploying and test receipt. Source-link assessment and original-reviewer contact remain manual operations, not automated verification.
-
-Brand follow-up: report, external-source and response forms now follow the main audit form’s label typography, 8px inputs, 16px form panels and full-width red submit buttons. Hero/section sizes and spacing match the main site. Privacy and confirmation pages load Inter and use shared navigation/footer.
+- https://supabase.com/pricing
+- https://supabase.com/docs/guides/auth/auth-smtp
+- https://supabase.com/docs/guides/auth/passwords
+- https://supabase.com/docs/guides/getting-started/api-keys
+- https://supabase.com/docs/guides/storage/buckets/fundamentals
+- https://resend.com/pricing

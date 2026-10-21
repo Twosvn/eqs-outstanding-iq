@@ -4,7 +4,10 @@
   "scripts": {
     "test": "node --test tests/*.test.cjs",
     "build": "npm test && node scripts/build.cjs",
-    "preview": "node scripts/preview.cjs"
+    "preview": "node scripts/preview.cjs",
+    "check:backend": "node scripts/check-backend.cjs"
   },
-  "engines": { "node": ">=22" }
+  "engines": {
+    "node": ">=22"
+  }
 }
